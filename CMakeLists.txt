@@ -13,7 +13,9 @@ include_directories("${CMAKE_INCLUDE_DIR}")
 
 # source files
 set(SOURCE_FILES main.cpp)
-set(TEST_FILES main.cpp)
+set(TEST_FILES
+    ${CMAKE_TEST_DIR}/ColorTests.cpp
+)
 
 # executables
 add_executable(GAEllipses ${SOURCE_FILES})
