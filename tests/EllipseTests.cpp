@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "Ellipse.hpp"
 
 SCENARIO( "Ellipse contains data about diameter and color", "[ellipse]" ) {
-    GIVEN( "An uninitialized Ellipse pointer" ) {
+    GIVEN( "A pseudorandom engine" ) {
         std::random_device rd;
         std::mt19937 gen(rd());
 
