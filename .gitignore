@@ -1,3 +1,5 @@
 .idea
 license_boilerplate
 bin
+*.swp
+*.swo

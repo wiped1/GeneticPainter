@@ -22,49 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
+#include "Catch/catch.hpp"
 
-#include <random>
+#include "Ellipse.hpp"
 
-/*!
-    Struct used to represent color.
- */
-struct Color {
-/*!
-    Empty constructor to prevent compiler from generating it's own
- */
-Color() {
-    // do nothing
+SCENARIO( "Ellipse contains data about diameter and color", "[ellipse]" ) {
+    GIVEN( "An uninitialized Ellipse pointer" ) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        WHEN( "An Ellipse is initialized with maxDiameter" ) {
+            unsigned int maxDiameter = 10;
+            Ellipse ellipse(gen, maxDiameter);
+
+            THEN( "The diameter is larger or equal zero" ) {
+                REQUIRE( ellipse.diameter >= 0);
+            }
+            AND_THEN( "The diameters is smaller or equal max diameter") {
+                REQUIRE( ellipse.diameter <= maxDiameter );
+            }
+        }
+    }
 }
-
-private:
-    const unsigned int MIN_VALUE = 0;
-    const unsigned int MAX_VALUE = 255;
-
-public:
-    unsigned int r;
-    unsigned int g;
-    unsigned int b;
-
-    /*!
-        Constructor used to instantiate colors with values from MIN_VALUE, MAX_VALUE range
-
-        @param rnd Pseudorandom engine used to instantiate values
-     */
-    Color(std::mt19937 &rnd) {
-        std::uniform_int_distribution<> dis(MIN_VALUE, MAX_VALUE);
-
-        r = static_cast<unsigned int>(dis(rnd));
-        g = static_cast<unsigned int>(dis(rnd));
-        b = static_cast<unsigned int>(dis(rnd));
-    }
-
-    /*!
-        Constructor used to instantiate values with given parameters
-
-        @param r,g,b Values to instantiate with
-     */
-    Color(unsigned int r, unsigned int g, unsigned int b) : r(r), g(g), b(b) {
-        // do nothing
-    }
-};

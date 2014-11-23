@@ -26,45 +26,31 @@ THE SOFTWARE.
 
 #include <random>
 
-/*!
-    Struct used to represent color.
- */
-struct Color {
-/*!
-    Empty constructor to prevent compiler from generating it's own
- */
-Color() {
-    // do nothing
-}
+#include "Color.hpp"
 
+/*!
+    Struct containing values describing an ellipse.
+ */
+struct Ellipse {
 private:
-    const unsigned int MIN_VALUE = 0;
-    const unsigned int MAX_VALUE = 255;
+    /*!
+        Empty constructor to prevent compiler from generating it's own
+     */
+    Ellipse() {
+        // do nothing
+    }
 
 public:
-    unsigned int r;
-    unsigned int g;
-    unsigned int b;
+    unsigned int diameter;
+    Color color;
 
     /*!
-        Constructor used to instantiate colors with values from MIN_VALUE, MAX_VALUE range
+        Constructor used to instantiate ellipse with random values
 
         @param rnd Pseudorandom engine used to instantiate values
      */
-    Color(std::mt19937 &rnd) {
-        std::uniform_int_distribution<> dis(MIN_VALUE, MAX_VALUE);
-
-        r = static_cast<unsigned int>(dis(rnd));
-        g = static_cast<unsigned int>(dis(rnd));
-        b = static_cast<unsigned int>(dis(rnd));
-    }
-
-    /*!
-        Constructor used to instantiate values with given parameters
-
-        @param r,g,b Values to instantiate with
-     */
-    Color(unsigned int r, unsigned int g, unsigned int b) : r(r), g(g), b(b) {
-        // do nothing
+    Ellipse(std::mt19937 &rnd, unsigned int maxDiameter) : color() {
+        std::uniform_int_distribution<> dis(0, maxDiameter);
+        diameter = static_cast<unsigned int>(dis(rnd));
     }
 };

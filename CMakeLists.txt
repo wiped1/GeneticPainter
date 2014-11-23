@@ -4,9 +4,9 @@ project(GAEllipses)
 # cmake variables
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/")
-set(CMAKE_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/")
-set(CMAKE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/")
-set(CMAKE_TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests/")
+set(CMAKE_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(CMAKE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(CMAKE_TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 
 # headers
 include_directories("${CMAKE_INCLUDE_DIR}")
@@ -14,7 +14,9 @@ include_directories("${CMAKE_INCLUDE_DIR}")
 # source files
 set(SOURCE_FILES main.cpp)
 set(TEST_FILES
+    ${CMAKE_TEST_DIR}/main.cpp
     ${CMAKE_TEST_DIR}/ColorTests.cpp
+    ${CMAKE_TEST_DIR}/EllipseTests.cpp
 )
 
 # executables
