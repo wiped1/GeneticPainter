@@ -30,16 +30,14 @@ THE SOFTWARE.
     Struct used to represent color.
  */
 struct Color {
-/*!
-    Empty constructor to prevent compiler from generating it's own
- */
-Color() {
-    // do nothing
-}
-
 private:
     const unsigned int MIN_VALUE = 0;
     const unsigned int MAX_VALUE = 255;
+
+    /*!
+        Deleted constructor to prevent compiler from generating it's own
+     */
+    Color() = delete;
 
 public:
     unsigned int r;

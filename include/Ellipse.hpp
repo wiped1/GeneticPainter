@@ -34,11 +34,9 @@ THE SOFTWARE.
 struct Ellipse {
 private:
     /*!
-        Empty constructor to prevent compiler from generating it's own
+        Deleted constructor to prevent compiler from generating it's own
      */
-    Ellipse() {
-        // do nothing
-    }
+    Ellipse() = delete;
 
 public:
     unsigned int diameter;
@@ -49,7 +47,7 @@ public:
 
         @param rnd Pseudorandom engine used to instantiate values
      */
-    Ellipse(std::mt19937 &rnd, unsigned int maxDiameter) : color() {
+    Ellipse(std::mt19937 &rnd, unsigned int maxDiameter) : color(rnd) {
         std::uniform_int_distribution<> dis(0, maxDiameter);
         diameter = static_cast<unsigned int>(dis(rnd));
     }
