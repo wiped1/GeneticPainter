@@ -34,15 +34,15 @@ private:
     const unsigned int MIN_VALUE = 0;
     const unsigned int MAX_VALUE = 255;
 
-    /*!
-        Deleted constructor to prevent compiler from generating it's own
-     */
-    Color() = delete;
-
 public:
     unsigned int r;
     unsigned int g;
     unsigned int b;
+
+    /*!
+        Deleted constructor to prevent compiler from generating it's own
+     */
+    Color() = delete;
 
     /*!
         Constructor used to instantiate colors with values from MIN_VALUE, MAX_VALUE range

@@ -32,15 +32,13 @@ THE SOFTWARE.
     Struct containing values describing an ellipse.
  */
 struct Ellipse {
-private:
+    unsigned int diameter;
+    Color color;
+
     /*!
         Deleted constructor to prevent compiler from generating it's own
      */
     Ellipse() = delete;
-
-public:
-    unsigned int diameter;
-    Color color;
 
     /*!
         Constructor used to instantiate ellipse with random values

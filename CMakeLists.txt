@@ -12,11 +12,16 @@ set(CMAKE_TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 include_directories("${CMAKE_INCLUDE_DIR}")
 
 # source files
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES
+    main.cpp
+    ${CMAKE_SRC_DIR}/Genotype.cpp
+)
 set(TEST_FILES
-    ${CMAKE_TEST_DIR}/main.cpp
+    ${CMAKE_TEST_DIR}/main-tests.cpp
     ${CMAKE_TEST_DIR}/ColorTests.cpp
     ${CMAKE_TEST_DIR}/EllipseTests.cpp
+    ${CMAKE_TEST_DIR}/GenotypeTests.cpp
+    ${CMAKE_SRC_DIR}/Genotype.cpp
 )
 
 # executables
