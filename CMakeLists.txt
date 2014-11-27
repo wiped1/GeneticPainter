@@ -11,9 +11,13 @@ set(CMAKE_TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 # headers
 include_directories("${CMAKE_INCLUDE_DIR}")
 
+# main file
+set(MAIN_FILE
+    main.cpp
+)
+
 # source files
 set(SOURCE_FILES
-    main.cpp
     ${CMAKE_SRC_DIR}/Genotype.cpp
 )
 set(TEST_FILES
@@ -21,12 +25,12 @@ set(TEST_FILES
     ${CMAKE_TEST_DIR}/ColorTests.cpp
     ${CMAKE_TEST_DIR}/EllipseTests.cpp
     ${CMAKE_TEST_DIR}/GenotypeTests.cpp
-    ${CMAKE_SRC_DIR}/Genotype.cpp
+    ${CMAKE_TEST_DIR}/Vector2Tests.cpp
 )
 
 # executables
-add_executable(GAEllipses ${SOURCE_FILES})
-add_executable(GAEllipses-tests ${TEST_FILES})
+add_executable(GAEllipses ${MAIN_FILE} ${SOURCE_FILES})
+add_executable(GAEllipses-tests ${TEST_FILES} ${SOURCE_FILES})
 
 # unit tests
 add_custom_command(

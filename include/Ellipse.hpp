@@ -26,12 +26,14 @@ THE SOFTWARE.
 
 #include <random>
 
+#include "Vector2.hpp"
 #include "Color.hpp"
 
 /*!
     Struct containing values describing an ellipse.
  */
 struct Ellipse {
+    Vector2 position;
     unsigned int diameter;
     Color color;
 
@@ -45,8 +47,15 @@ struct Ellipse {
 
         @param rnd Pseudorandom engine used to instantiate values
      */
-    Ellipse(std::mt19937 &rnd, unsigned int maxDiameter) : color(rnd) {
-        std::uniform_int_distribution<> dis(0, maxDiameter);
-        diameter = static_cast<unsigned int>(dis(rnd));
+    Ellipse(std::mt19937 &rnd, unsigned int maxDiameter, int maxWidth, int maxHeight)
+            : color(rnd), position() {
+        std::uniform_int_distribution<> diameterDistribution(0, maxDiameter);
+        std::uniform_int_distribution<> widthDistribution(0, maxWidth);
+        std::uniform_int_distribution<> heightDistribution(0, maxHeight);
+
+        diameter = static_cast<unsigned int>(diameterDistribution(rnd));
+        position.x = widthDistribution(rnd);
+        position.y = heightDistribution(rnd);
+
     }
 };

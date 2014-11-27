@@ -21,3 +21,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
+/*!
+    Struct used to represent position in 2d space.
+ */
+struct Vector2 {
+    /*!
+        Position x in 2d space
+     */
+    int x;
+    /*!
+        Position y in 2d space
+     */
+    int y;
+
+    bool operator==(const Vector2& rhs) {
+        return this->x == rhs.x && this->y == rhs.y;
+    }
+
+    /*!
+        Deleted constructor to prevent compiler from generating it's own
+     */
+    Vector2() {
+        x = 0;
+        y = 0;
+    }
+
+    /*!
+        Constructor used to instantiate vector2 with values
+
+        @param x x position
+        @param y y position
+     */
+    Vector2(int x, int y) {
+        this->x = x;
+        this->y = y;
+    }
+};

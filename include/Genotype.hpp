@@ -50,7 +50,8 @@ public:
         @param length genes vector length
         @param maxDiameter max diameter of ellipse
      */
-    Genotype(std::mt19937 rnd, unsigned int length, unsigned int maxDiameter);
+    Genotype(std::mt19937 rnd, unsigned int length, unsigned int maxDiameter,
+            int maxWidth, int maxHeight);
 
     /*!
         Method used to return vector of genes

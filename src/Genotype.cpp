@@ -24,8 +24,9 @@ THE SOFTWARE.
 
 #include "Genotype.hpp"
 
-Genotype::Genotype(std::mt19937 rnd, unsigned int length, unsigned int maxDiameter) :
-        genes(length, Ellipse(rnd, maxDiameter)) {
+Genotype::Genotype(std::mt19937 rnd, unsigned int length, unsigned int maxDiameter,
+        int maxWidth, int maxHeight)
+        : genes(length, Ellipse(rnd, maxDiameter, maxWidth, maxHeight)) {
     // do nothing
 }
 

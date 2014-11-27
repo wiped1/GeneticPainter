@@ -33,13 +33,19 @@ SCENARIO( "Ellipse contains data about diameter and color", "[ellipse]" ) {
 
         WHEN( "An Ellipse is initialized with maxDiameter" ) {
             unsigned int maxDiameter = 10;
-            Ellipse ellipse(gen, maxDiameter);
+            int maxWidth = 640;
+            int maxHeight = 480;
+            Ellipse ellipse(gen, maxDiameter, maxWidth, maxHeight);
 
             THEN( "The diameter is larger or equal zero" ) {
                 REQUIRE( ellipse.diameter >= 0);
             }
-            AND_THEN( "The diameters is smaller or equal max diameter") {
+            AND_THEN( "The diameters is smaller or equal max diameter" ) {
                 REQUIRE( ellipse.diameter <= maxDiameter );
+            }
+            AND_THEN( "The position is smaller or equal max width and height" ) {
+                REQUIRE( ellipse.position.x <= maxWidth );
+                REQUIRE( ellipse.position.y <= maxHeight );
             }
         }
     }

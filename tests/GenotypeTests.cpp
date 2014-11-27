@@ -31,12 +31,14 @@ SCENARIO( "Genotype contains information about genes", "[genotype]" ) {
         std::random_device rd;
         std::mt19937 gen(rd());
         WHEN( "The genotype is initialized" ) {
-            const unsigned int LENGTH = 50;
-            const unsigned int MAX_DIAMETER = 10;
-            Genotype genotype(gen, 50, MAX_DIAMETER);
+            unsigned int length = 50;
+            unsigned int maxDiameter = 10;
+            int maxWidth = 640;
+            int maxHeight = 480;
+            Genotype genotype(gen, 50, maxDiameter, maxWidth, maxHeight);
 
             THEN( "Genes length is generated properly" ) {
-                REQUIRE( genotype.getGenes().size() == LENGTH );
+                REQUIRE( genotype.getGenes().size() == length );
             }
         }
     }
