@@ -7,6 +7,4 @@ before_install:
     - sudo apt-get install -qq g++-4.9
     - export CXX="g++-4.9"
 script: 
-    cmake ./CMakeLists.txt &&
-    make GeneticPainter-tests &&
-    make GeneticPainter
+    - cmake ./CMakeLists.txt && make
