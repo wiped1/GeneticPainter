@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.4)
-project(GAEllipses)
+project(GeneticPainter)
 
 # cmake variables
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -29,18 +29,18 @@ set(TEST_FILES
 )
 
 # executables
-add_executable(GAEllipses ${MAIN_FILE} ${SOURCE_FILES})
-add_executable(GAEllipses-tests ${TEST_FILES} ${SOURCE_FILES})
+add_executable(GeneticPainter ${MAIN_FILE} ${SOURCE_FILES})
+add_executable(GeneticPainter-tests ${TEST_FILES} ${SOURCE_FILES})
 
 # unit tests
 add_custom_command(
-    TARGET GAEllipses-tests
+    TARGET GeneticPainter-tests
     POST_BUILD
-    COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/GAEllipses-tests
+    COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/GeneticPainter-tests
 )
 
 enable_testing(true)
 add_test(
     NAME all
-    COMMAND GAEllipses-tests
+    COMMAND GeneticPainter-tests
 )
