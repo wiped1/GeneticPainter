@@ -43,9 +43,14 @@ SCENARIO( "Ellipse contains data about diameter and color", "[ellipse]" ) {
             AND_THEN( "The diameters is smaller or equal max diameter" ) {
                 REQUIRE( ellipse.diameter <= maxDiameter );
             }
+            AND_THEN( "The position is larger or equal zero" ) {
+                REQUIRE( ellipse.position.x >= 0 );
+                REQUIRE( ellipse.position.y >= 0 );
+            }
             AND_THEN( "The position is smaller or equal max width and height" ) {
                 REQUIRE( ellipse.position.x <= maxWidth );
                 REQUIRE( ellipse.position.y <= maxHeight );
+                REQUIRE( false );
             }
         }
     }
