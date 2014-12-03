@@ -22,24 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "Catch/catch.hpp"
+#pragma once
 
-#include "Genotype.hpp"
+#include <vector>
 
-SCENARIO( "Genotype contains information about genes", "[genotype]" ) {
-    GIVEN( "A pseudorandom engine" ) {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        WHEN( "The genotype is initialized" ) {
-            unsigned int length = 50;
-            unsigned int maxDiameter = 10;
-            int maxWidth = 640;
-            int maxHeight = 480;
-            Genotype genotype(gen, 50, maxDiameter, maxWidth, maxHeight);
+#include "Ellipse.hpp"
 
-            THEN( "Genes length is generated properly" ) {
-                REQUIRE( genotype.getGenes().size() == length );
-            }
-        }
-    }
-}
+/*!
+    Genotype class used to store genes values.
+
+    Values are encoded as vector of Ellipse structs.
+ */
+class Genotype {
+private:
+    std::vector<Ellipse> genes;
+
+public:
+    /*!
+        Deleted constructor to prevent compiler from generating it's own
+     */
+    Genotype() = delete;
+
+    /*!
+        Constructor used to instantiate Genotype with random Ellipse values
+
+        @param rnd pseudorandom engine
+        @param length genes vector length
+        @param maxDiameter max diameter of ellipse
+     */
+    Genotype(std::mt19937 rnd, unsigned int length, unsigned int maxDiameter,
+            int maxWidth, int maxHeight);
+
+    /*!
+        Method used to return vector of genes
+     */
+    const std::vector<Ellipse>& getGenes();
+
+};
