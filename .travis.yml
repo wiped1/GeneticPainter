@@ -1,4 +1,6 @@
 language: cpp
 compiler:
     - gcc
-script: cmake ./CMakeLists.txt
+script: cmake ./CMakeLists.txt \
+    make GeneticPainter-tests \
+    make GeneticPainter
