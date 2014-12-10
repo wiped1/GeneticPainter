@@ -27,32 +27,19 @@ THE SOFTWARE.
 #include "Genotype.hpp"
 
 SCENARIO( "Genotype contains information about genes", "[genotype]" ) {
-    GIVEN( "A pseudorandom engine" ) {
-        std::random_device rd;
-        std::mt19937 gen(rd());
+    GIVEN( "Genotype instance" ) {
+        std::unique_ptr<Genotype> genotype;
 
-        WHEN( "The genotype is initialized" ) {
-            unsigned int length = 50;
-            unsigned int maxDiameter = 10;
-            int maxWidth = 640;
-            int maxHeight = 480;
-            Genotype genotype(gen, 50, maxDiameter, maxWidth, maxHeight);
+        WHEN( "It's constructed" ) {
+            std::vector<> vec { 1, 2, 3, 4, 5};
+            genotype = std::unique_ptr<Genotype>(new Genotype(vec));
 
-            THEN( "Genes length is generated properly" ) {
-                REQUIRE( genotype.getGenes().size() == length );
+            THEN( "The values are proper" ) {
+                for ( int i = 0; i < vec.size(); i++ ) {
+                    REQUIRE(genotype->getGenes()[i] == vec[i]);
+                }
+                REQUIRE(genotype->getGenes() == vec);
             }
-        }
-    }
-}
-
-SCENARIO( "Genotype is iterable using for loop", "[genotype iterator]" ) {
-    GIVEN( "A pseudorandom engine and a Genotype object" ) {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        Genotype genotype(gen, 50, 10, 640, 480);
-
-        WHEN( "" ) {
-
         }
     }
 }

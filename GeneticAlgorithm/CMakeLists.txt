@@ -16,9 +16,7 @@ include_directories("${CMAKE_INCLUDE_DIR}")
 #set(MAIN_FILE main.cpp)
 set(MAIN_TEST_FILE ${CMAKE_TEST_DIR}/mainTest.cpp)
 
-set(SOURCE_FILES
-    ${CMAKE_SRC_DIR}/Genotype.cpp
-)
+aux_source_directory(${CMAKE_SRC_DIR} SOURCE_FILES)
 
 set(TEST_FILES
     ${CMAKE_TEST_DIR}/GenotypeTest.cpp

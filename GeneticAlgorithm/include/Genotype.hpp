@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include "Ellipse.hpp"
@@ -35,7 +36,7 @@ THE SOFTWARE.
  */
 class Genotype {
 private:
-    std::vector<Ellipse> genes;
+    std::vector<Ellipse> _genes;
 
 public:
     /*!
@@ -44,18 +45,16 @@ public:
     Genotype() = delete;
 
     /*!
-        Constructor used to instantiate Genotype with random Ellipse values
-
-        @param rnd pseudorandom engine
-        @param length genes vector length
-        @param maxDiameter max diameter of ellipse
+        Constructor used to initialize genes with existing ones
      */
-    Genotype(std::mt19937 rnd, unsigned int length, unsigned int maxDiameter,
-            int maxWidth, int maxHeight);
+    Genotype(const std::vector<Ellipse> &genes) : _genes(genes) {
+        // do nothing
+    }
 
     /*!
         Method used to return vector of genes
      */
-    const std::vector<Ellipse>& getGenes();
-
+    const std::vector<Ellipse>& getGenes() {
+        return _genes;
+    }
 };
