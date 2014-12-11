@@ -16,11 +16,10 @@ include_directories("${CMAKE_INCLUDE_DIR}")
 #set(MAIN_FILE main.cpp)
 set(MAIN_TEST_FILE ${CMAKE_TEST_DIR}/mainTest.cpp)
 
+# include all files from directory ${CMAKE_SRC_DIR}
 aux_source_directory(${CMAKE_SRC_DIR} SOURCE_FILES)
-
-set(TEST_FILES
-    ${CMAKE_TEST_DIR}/GenotypeTest.cpp
-)
+# include all files from directory ${CMAKE_TEST_DIR}
+aux_source_directory(${CMAKE_TEST_DIR} TEST_FILES)
 
 add_executable(GeneticAlgorithmTest ${MAIN_TEST_FILE} ${TEST_FILES} ${SOURCE_FILES})
 

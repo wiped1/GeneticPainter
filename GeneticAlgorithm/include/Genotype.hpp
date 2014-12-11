@@ -1,27 +1,3 @@
-/*
-The MIT License (MIT)
-
-Copyright (c) <year> <copyright holders>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
 #pragma once
 
 #include <iostream>
@@ -34,27 +10,46 @@ THE SOFTWARE.
 
     Values are encoded as vector of Ellipse structs.
  */
+template <typename T>
 class Genotype {
 private:
-    std::vector<Ellipse> _genes;
+    std::vector<T> _genes;
 
 public:
-    /*!
-        Deleted constructor to prevent compiler from generating it's own
-     */
-    Genotype() = delete;
-
+    Genotype();
     /*!
         Constructor used to initialize genes with existing ones
      */
-    Genotype(const std::vector<Ellipse> &genes) : _genes(genes) {
-        // do nothing
-    }
-
+    Genotype(const std::vector<T> &genes);
+    Genotype<T> & operator=(const Genotype<T> &other);
     /*!
         Method used to return vector of genes
      */
-    const std::vector<Ellipse>& getGenes() {
-        return _genes;
-    }
+    const std::vector<T>& getGenes() const;
+    virtual ~Genotype();
 };
+template <typename T>
+Genotype<T>::Genotype() : _genes() {
+    // do nothing
+}
+
+template <typename T>
+Genotype<T>::Genotype(const std::vector<T> &genes) : _genes(genes) {
+    // do nothing
+}
+
+template <typename T>
+Genotype<T> & Genotype<T>::operator=(const Genotype<T> &other) {
+    _genes = other._genes;
+    return *this;
+}
+
+template <typename T>
+const std::vector<T> & Genotype<T>::getGenes() const {
+    return _genes;
+}
+
+template <typename T>
+Genotype<T>::~Genotype() {
+    // do nothing
+}
