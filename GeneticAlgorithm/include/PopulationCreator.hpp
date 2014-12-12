@@ -19,5 +19,5 @@ private:
 public:
     static PopulationCreator & instance();
     template <typename T>
-    Population<T> create(unsigned int populationSize, const GenotypeCreator<T> & genotypeCreator);
+    Population<T> createWithSize(unsigned int populationSize, const GenotypeCreator<T> & genotypeCreator);
 };
