@@ -3,53 +3,67 @@
 #include <iostream>
 #include <vector>
 
-#include "Ellipse.hpp"
-
 /*!
     Genotype class used to store genes values.
-
-    Values are encoded as vector of Ellipse structs.
  */
-template <typename T>
+template <typename Collection>
 class Genotype {
 private:
-    std::vector<T> _genes;
+    Collection _genes;
 
 public:
     Genotype();
-    /*!
-        Constructor used to initialize genes with existing ones
-     */
-    Genotype(const std::vector<T> &genes);
-    Genotype<T> & operator=(const Genotype<T> &other);
-    /*!
-        Method used to return vector of genes
-     */
-    const std::vector<T>& getGenes() const;
+    Genotype(const Collection &genes);
+    bool operator ==(const Collection &other);
+    bool operator ==(const Genotype<Collection> &other);
+    bool operator !=(const Collection &other);
+    bool operator !=(const Genotype<Collection> &other);
+    typename Collection::const_iterator cbegin();
+    typename Collection::const_iterator cend();
     virtual ~Genotype();
 };
-template <typename T>
-Genotype<T>::Genotype() : _genes() {
+
+template <typename Collection>
+Genotype<Collection>::Genotype() : _genes() {
     // do nothing
 }
 
-template <typename T>
-Genotype<T>::Genotype(const std::vector<T> &genes) : _genes(genes) {
+template <typename Collection>
+Genotype<Collection>::Genotype(const Collection &genes) : _genes(genes) {
     // do nothing
 }
 
-template <typename T>
-Genotype<T> & Genotype<T>::operator=(const Genotype<T> &other) {
-    _genes = other._genes;
-    return *this;
+template <typename Collection>
+bool Genotype<Collection>::operator ==(const Collection &other) {
+    return _genes == other;
 }
 
-template <typename T>
-const std::vector<T> & Genotype<T>::getGenes() const {
-    return _genes;
+template <typename Collection>
+bool Genotype<Collection>::operator ==(const Genotype<Collection> &other) {
+    return _genes == other._genes;
 }
 
-template <typename T>
-Genotype<T>::~Genotype() {
+template <typename Collection>
+bool Genotype<Collection>::operator !=(const Collection &other) {
+    return _genes != other;
+}
+
+template <typename Collection>
+bool Genotype<Collection>::operator !=(const Genotype<Collection> &other) {
+    return _genes != other._genes;
+}
+
+template <typename Collection>
+typename Collection::const_iterator Genotype<Collection>::cbegin() {
+    return _genes.cbegin();
+}
+
+template <typename Collection>
+typename Collection::const_iterator Genotype<Collection>::cend() {
+    return _genes.cend();
+}
+
+template <typename Collection>
+Genotype<Collection>::~Genotype() {
     // do nothing
 }
