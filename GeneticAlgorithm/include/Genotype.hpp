@@ -4,66 +4,79 @@
 #include <vector>
 
 /*!
-    Genotype class used to store genes values.
+    Genotype template used to store genes values.
+
+    Genotype template can be instantiated interchangeably using only the type of
+    stored genes (ex. Genotype<int>) that defaults to Genotype<int, std::vector>,
+    or it can be instantiated with collection type, for example Genotype<int, std::list>
+
+    \tparam T type of stored genes
+    \tparam C collection that stores genes
  */
-template <typename Collection>
+template <typename T,
+template <typename, typename = std::allocator<T>> class C = std::vector>
 class Genotype {
 private:
-    Collection _genes;
+    C<T, std::allocator<T>> _genes;
 
 public:
+    typedef T type; //!< The type of specific template implementation
+    typedef C<T, std::allocator<T>> collection; //!< The collection of specific template implementation
+
     Genotype();
-    Genotype(const Collection &genes);
-    bool operator ==(const Collection &other);
-    bool operator ==(const Genotype<Collection> &other);
-    bool operator !=(const Collection &other);
-    bool operator !=(const Genotype<Collection> &other);
-    typename Collection::const_iterator cbegin();
-    typename Collection::const_iterator cend();
+    Genotype(const C<T, std::allocator<T>> &genes);
+    bool operator ==(const C<T, std::allocator<T>> &other);
+    bool operator ==(const Genotype<T, C> &other);
+    bool operator !=(const C<T, std::allocator<T>> &other);
+    bool operator !=(const Genotype<T, C> &other);
+    const C<T, std::allocator<T>>& getGenes() const;
     virtual ~Genotype();
 };
 
-template <typename Collection>
-Genotype<Collection>::Genotype() : _genes() {
+template <typename T,
+template <typename, typename> class C>
+Genotype<T, C>::Genotype() : _genes() {
     // do nothing
 }
 
-template <typename Collection>
-Genotype<Collection>::Genotype(const Collection &genes) : _genes(genes) {
+template <typename T,
+template <typename, typename> class C>
+Genotype<T, C>::Genotype(const C<T, std::allocator<T>> &genes) : _genes(genes) {
     // do nothing
 }
 
-template <typename Collection>
-bool Genotype<Collection>::operator ==(const Collection &other) {
+template <typename T,
+template <typename, typename> class C>
+bool Genotype<T, C>::operator ==(const C<T, std::allocator<T>> &other) {
     return _genes == other;
 }
 
-template <typename Collection>
-bool Genotype<Collection>::operator ==(const Genotype<Collection> &other) {
+template <typename T,
+template <typename, typename> class C>
+bool Genotype<T, C>::operator ==(const Genotype<T, C> &other) {
     return _genes == other._genes;
 }
 
-template <typename Collection>
-bool Genotype<Collection>::operator !=(const Collection &other) {
+template <typename T,
+template <typename, typename> class C>
+bool Genotype<T, C>::operator !=(const C<T, std::allocator<T>> &other) {
     return _genes != other;
 }
 
-template <typename Collection>
-bool Genotype<Collection>::operator !=(const Genotype<Collection> &other) {
+template <typename T,
+template <typename, typename> class C>
+bool Genotype<T, C>::operator !=(const Genotype<T, C> &other) {
     return _genes != other._genes;
 }
 
-template <typename Collection>
-typename Collection::const_iterator Genotype<Collection>::cbegin() {
-    return _genes.cbegin();
+template <typename T,
+template <typename, typename> class C>
+const C<T, std::allocator<T>>& Genotype<T, C>::getGenes() const {
+    return _genes;
 }
 
-template <typename Collection>
-typename Collection::const_iterator Genotype<Collection>::cend() {
-    return _genes.cend();
-}
-
-template <typename Collection>
-Genotype<Collection>::~Genotype() {
+template <typename T,
+template <typename, typename> class C>
+Genotype<T, C>::~Genotype() {
     // do nothing
 }
