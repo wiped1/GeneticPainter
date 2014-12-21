@@ -40,7 +40,7 @@ SCENARIO( "PopulationCreator is used to create Population instances", "[populati
             }
             AND_THEN( "The population genotypes have correct size" ) {
                 for ( unsigned int i = 0; i < POPULATION_SIZE; i++ ) {
-
+                    REQUIRE(population.getGenotypes()[i].getGenes().size() == GENOTYPE_SIZE);
                 }
             }
         }
