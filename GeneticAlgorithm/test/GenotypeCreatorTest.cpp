@@ -1,12 +1,11 @@
 #include "Catch/catch.hpp"
 
 #include <list>
-
 #include "GenotypeCreator.hpp"
 
 // anonymous namespace to prevent linker errors
 namespace {
-    class IntegerGenotypeCreator : public GenotypeCreator<int> {
+    class IntegerGenotypeCreator : public GenotypeCreator<Genotype<int>> {
     private:
         unsigned int _size;
     public:
@@ -22,7 +21,7 @@ namespace {
         }
     };
 
-    class IntegerListGenotypeCreator : public GenotypeCreator<int, std::list> {
+    class IntegerListGenotypeCreator : public GenotypeCreator<Genotype<int, std::list>> {
     private:
         unsigned int _size;
     public:
