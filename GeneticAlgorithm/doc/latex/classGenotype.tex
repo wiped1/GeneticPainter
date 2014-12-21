@@ -1,0 +1,58 @@
+\hypertarget{classGenotype}{\section{Genotype$<$ T, C $>$ Class Template Reference}
+\label{classGenotype}\index{Genotype$<$ T, C $>$@{Genotype$<$ T, C $>$}}
+}
+
+
+{\ttfamily \#include $<$Genotype.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classGenotype_ae815fb1961ba244afc5eb2b54d75a7a2}{typedef T \hyperlink{classGenotype_ae815fb1961ba244afc5eb2b54d75a7a2}{type}}\label{classGenotype_ae815fb1961ba244afc5eb2b54d75a7a2}
+
+\begin{DoxyCompactList}\small\item\em The type of specific template implementation. \end{DoxyCompactList}\item 
+\hypertarget{classGenotype_a7d2341c93fc2c9e93a4ec4f89ed5cd27}{typedef C$<$ T, std\+::allocator$<$ T $>$ $>$ \hyperlink{classGenotype_a7d2341c93fc2c9e93a4ec4f89ed5cd27}{collection}}\label{classGenotype_a7d2341c93fc2c9e93a4ec4f89ed5cd27}
+
+\begin{DoxyCompactList}\small\item\em The collection of specific template implementation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classGenotype_aa017324ebf3698c5f109df27abbaae2a}{{\bfseries Genotype} (const C$<$ T, std\+::allocator$<$ T $>$$>$ \&genes)}\label{classGenotype_aa017324ebf3698c5f109df27abbaae2a}
+
+\item 
+\hypertarget{classGenotype_a3d872d4a917e96ea0431485f4458425f}{bool {\bfseries operator==} (const C$<$ T, std\+::allocator$<$ T $>$$>$ \&other)}\label{classGenotype_a3d872d4a917e96ea0431485f4458425f}
+
+\item 
+\hypertarget{classGenotype_a7267d1197bc6c9204b0076d82d2704c5}{bool {\bfseries operator==} (const \hyperlink{classGenotype}{Genotype}$<$ T, C $>$ \&other)}\label{classGenotype_a7267d1197bc6c9204b0076d82d2704c5}
+
+\item 
+\hypertarget{classGenotype_a6d3c7191139cc7921788869aa1b8d5ec}{bool {\bfseries operator!=} (const C$<$ T, std\+::allocator$<$ T $>$$>$ \&other)}\label{classGenotype_a6d3c7191139cc7921788869aa1b8d5ec}
+
+\item 
+\hypertarget{classGenotype_abf2058ffdeef37f5cc1defdc246d98ab}{bool {\bfseries operator!=} (const \hyperlink{classGenotype}{Genotype}$<$ T, C $>$ \&other)}\label{classGenotype_abf2058ffdeef37f5cc1defdc246d98ab}
+
+\item 
+\hypertarget{classGenotype_ab1b04f43ea5dbc620eef2754cb26aecf}{const C$<$ T, std\+::allocator$<$ T $>$ $>$ \& {\bfseries get\+Genes} () const }\label{classGenotype_ab1b04f43ea5dbc620eef2754cb26aecf}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T, template$<$ typename, typename=std\+::allocator$<$ T $>$$>$ class C = std\+::vector$>$class Genotype$<$ T, C $>$}
+
+\hyperlink{classGenotype}{Genotype} template used to store genes values.
+
+\hyperlink{classGenotype}{Genotype} template can be instantiated interchangeably using only the type of stored genes (ex. Genotype$<$int$>$) that defaults to Genotype$<$int, std\+::vector$>$, or it can be instantiated with collection type, for example Genotype$<$int, std\+::list$>$
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & type of stored genes \\
+\hline
+{\em C} & collection that stores genes \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/Genotype.\+hpp\end{DoxyCompactItemize}
