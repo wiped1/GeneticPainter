@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "Genotype.hpp"
-#include "Ellipse.hpp"
 
 /*!
     Class used to store data about genotypes pool
@@ -11,56 +10,57 @@
     In course of the program, the genotypes will be selected, crossed-over, mutated
     in order to produce the best possible (albeit local) solution.
  */
-template <typename T>
+template <typename G,
+template <typename, typename = std::allocator<G>> class C = std::vector>
 class Population {
 private:
-    std::vector<Genotype<T>> _genotypes;
+    C<G> _genotypes;
 
 public:
     Population();
     Population(unsigned int size);
-    Population(const std::vector<Genotype<T>> &genotypes);
-    Population(const Population<T> &other);
-    Population<T> & operator=(const Population<T> &other);
+    Population(C<G> const &genotypes);
+    Population<G, C> operator=(const Population<C<G>> &other);
     /*!
-        Method used to return vector of genotypes
+        Method used to return collection of genotypes
      */
-    const std::vector<Genotype<T>>& getGenotypes() const;
+    const C<G>& getGenotypes() const;
     virtual ~Population();
 };
 
-template <typename T>
-Population<T>::Population() : _genotypes() {
+template <typename G,
+template <typename, typename> class C>
+Population<G, C>::Population() : _genotypes() {
     // do nothing
 }
 
-template <typename T>
-Population<T>::Population(unsigned int size) : _genotypes(size) {
+template <typename G,
+template <typename, typename> class C>
+Population<G, C>::Population(unsigned int size) : _genotypes(size) {
     // do nothing
 }
 
-template <typename T>
-Population<T>::Population(const std::vector<Genotype<T>> &genotypes) : _genotypes(genotypes) {
+template <typename G,
+template <typename, typename> class C>
+Population<G, C>::Population(C<G, std::allocator<G>> const &genotypes) : _genotypes(genotypes) {
     // do nothing
 }
 
-template <typename T>
-Population<T>::Population(const Population &other) : _genotypes(other.getGenotypes()) {
-    // do nothing
-}
-
-template <typename T>
-Population<T> &Population<T>::operator=(const Population<T> &other) {
+template <typename G,
+template <typename, typename> class C>
+Population<G, C> Population<G, C>::operator=(const Population<C<G, std::allocator<G>>> &other) {
     _genotypes = other._genotypes;
     return *this;
 }
 
-template <typename T>
-const std::vector<Genotype<T>> &Population<T>::getGenotypes() const {
+template <typename G,
+template <typename, typename> class C>
+const C<G, std::allocator<G>> &Population<G, C>::getGenotypes() const {
     return _genotypes;
 }
 
-template <typename T>
-Population<T>::~Population() {
+template <typename G,
+template <typename, typename> class C>
+Population<G, C>::~Population() {
     // do nothing
 }

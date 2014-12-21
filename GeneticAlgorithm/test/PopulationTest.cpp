@@ -1,87 +1,46 @@
 #include "Catch/catch.hpp"
 
 #include "Population.hpp"
-#include "GenotypeCreator.hpp"
-
-//#ifndef INTEGER_GENOTYPE_CREATOR_H
-//#define INTEGER_GENOTYPE_CREATOR_H
-//// BEGINNING of test class definition
-//class IntegerGenotypeCreator : public GenotypeCreator<int> {
-//private:
-//    unsigned int _size;
-//public:
-//    IntegerGenotypeCreator(unsigned int size);
-//    virtual Genotype<int> create() const;
-//};
-//
-//IntegerGenotypeCreator::IntegerGenotypeCreator(unsigned int size) : _size(size) {
-//    // do nothing
-//}
-//
-//Genotype<int> IntegerGenotypeCreator::create() const {
-//    std::vector<int> genes(_size);
-//    for ( int gene : genes ) {
-//        gene = rand() % 100;
-//    }
-//    return Genotype<int>(genes);
-//}
-//// END of test class definition
-//#endif
-
-// BEGINNING of test class definition
-class AnotherIntegerGenotypeCreator : public GenotypeCreator<int> {
-private:
-    unsigned int _size;
-public:
-    AnotherIntegerGenotypeCreator(unsigned int size);
-    virtual Genotype<int> create() const;
-};
-
-AnotherIntegerGenotypeCreator::AnotherIntegerGenotypeCreator(unsigned int size) : _size(size) {
-    // do nothing
-}
-
-Genotype<int> AnotherIntegerGenotypeCreator::create() const {
-    std::vector<int> genes(_size);
-    for ( int gene : genes ) {
-        gene = rand() % 100;
-    }
-    return Genotype<int>(genes);
-}
-// END of test class definition
-
+#include "Genotype.hpp"
 
 SCENARIO( "Population contains collection of genotypes", "[population]" ) {
-    GIVEN( "An empty Population of type int" ) {
-        Population<int> pop;
+    GIVEN( "Population instance" ) {
+        Population<Genotype<int>> population;
 
-        WHEN( "Population is created with size constructor" ) {
-            const unsigned int SIZE = 50;
-            pop = Population<int>(SIZE);
+        WHEN( "Population is constructed with size" ) {
+            const unsigned int SIZE = 10;
+            population = Population<Genotype<int>>(SIZE);
 
-            THEN( "Population size is correct" ) {
-                REQUIRE(pop.getGenotypes().size() == SIZE);
+            THEN( "The collection size is proper" ) {
+                REQUIRE(population.getGenotypes().size() == SIZE);
             }
         }
-        WHEN( "Population is constructed using existing vector" ) {
-            const unsigned int POPULATION_SIZE = 10;
-            const unsigned int GENOTYPE_SIZE = 50;
-            std::vector<Genotype<int>> genotypes(POPULATION_SIZE);
-            AnotherIntegerGenotypeCreator genotypeCreator(GENOTYPE_SIZE);
+        WHEN( "Population is constructed with existing genotype vector" ) {
+            std::vector<int> vec { 1, 2, 3, 4, 5 };
+            std::vector<Genotype<int>> genotypes(1);
+            genotypes.emplace_back(Genotype<int>(vec));
 
-            for ( int i = 0; i < POPULATION_SIZE; i++ ) {
-                genotypes[i] = genotypeCreator.create();
-            }
+            population = Population<Genotype<int>>(genotypes);
 
-            pop = Population<int>(genotypes);
-            THEN( "The constructed population has correct size" ) {
-                REQUIRE(pop.getGenotypes().size() == POPULATION_SIZE);
+            THEN( "The constructed genotypes are equal" ) {
+                REQUIRE(population.getGenotypes()[0] == genotypes[0]);
             }
-            AND_THEN( "The constructed population genotypes have correct sizes" ) {
-                for ( int i = 0; i < POPULATION_SIZE; i++ ) {
-                    REQUIRE(pop.getGenotypes()[i].getGenes().size() == GENOTYPE_SIZE);
-                }
+            AND_THEN( "The size is proper" ) {
+                REQUIRE(population.getGenotypes().size() == genotypes.size());
+            }
+        }
+        WHEN( "Population is assigned a existing instance" ) {
+            std::vector<int> vec { 1, 2, 3, 4, 5 };
+            std::vector<Genotype<int>> genotypes(1);
+            genotypes.emplace_back(Genotype<int>(vec));
+            Population<Genotype<int>> other = Population<Genotype<int>>(genotypes);
+
+            population = other;
+
+            THEN( "They are equal when comparing by genotypes" ) {
+                REQUIRE(population.getGenotypes() == other.getGenotypes());
             }
         }
     }
 }
+
