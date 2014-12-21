@@ -25,8 +25,8 @@ public:
 
     Genotype();
     Genotype(const C<T, std::allocator<T>> &genes);
-    bool operator ==(const C<T, std::allocator<T>> &other);
-    bool operator ==(const Genotype<T, C> &other);
+    bool operator ==(const C<T, std::allocator<T>> &other) const;
+    bool operator ==(const Genotype<T, C> &other) const;
     bool operator !=(const C<T, std::allocator<T>> &other);
     bool operator !=(const Genotype<T, C> &other);
     const C<T, std::allocator<T>>& getGenes() const;
@@ -47,13 +47,13 @@ Genotype<T, C>::Genotype(const C<T, std::allocator<T>> &genes) : _genes(genes) {
 
 template <typename T,
 template <typename, typename> class C>
-bool Genotype<T, C>::operator ==(const C<T, std::allocator<T>> &other) {
+bool Genotype<T, C>::operator ==(const C<T, std::allocator<T>> &other) const {
     return _genes == other;
 }
 
 template <typename T,
 template <typename, typename> class C>
-bool Genotype<T, C>::operator ==(const Genotype<T, C> &other) {
+bool Genotype<T, C>::operator ==(const Genotype<T, C> &other) const {
     return _genes == other._genes;
 }
 

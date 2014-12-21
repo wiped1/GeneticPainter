@@ -9,7 +9,7 @@ SCENARIO( "Genotype contains information about genes", "[genotype]" ) {
         Genotype<int> genotype;
 
         WHEN( "It's constructed with an existing vector" ) {
-            std::vector<int> vec { 1, 2, 3, 4, 5};
+            std::vector<int> vec { 1, 2, 3, 4, 5 };
             genotype = Genotype<int>(vec);
 
             THEN( "It's value is comparable by collection" ) {
@@ -30,9 +30,6 @@ SCENARIO( "Genotype contains information about genes", "[genotype]" ) {
             AND_THEN( "It's size is proper" ) {
                 REQUIRE(genotype.getGenes().size() == 5);
             }
-            AND_THEN( "It's able to be copy constructed") {
-                Genotype<int> other(genotype);
-            }
         }
     }
     GIVEN( "A Genotype with non-default collection" ) {
@@ -48,7 +45,7 @@ SCENARIO( "Genotype contains information about genes", "[genotype]" ) {
         }
     }
 
-    // test build in typedefs that describe type and collection
+    // test built-in typedefs that describe Genotype type and collection
     REQUIRE(typeid(Genotype<int>::type) == typeid(int));
     REQUIRE(typeid(Genotype<int>::collection) == typeid(std::vector<int>));
 }
