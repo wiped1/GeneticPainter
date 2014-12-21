@@ -22,6 +22,7 @@ private:
 public:
     typedef T type; //!< The type of specific template implementation
     typedef C<T, std::allocator<T>> collection; //!< The collection of specific template implementation
+    typedef std::allocator<T> allocator;
 
     Genotype();
     Genotype(const C<T, std::allocator<T>> &genes);
