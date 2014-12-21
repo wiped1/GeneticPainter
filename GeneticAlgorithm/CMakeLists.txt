@@ -5,6 +5,7 @@ project(GeneticAlgorithm)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # CMake directories
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_SRC_DIR                  "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(CMAKE_INCLUDE_DIR              "${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -21,7 +22,7 @@ aux_source_directory(${CMAKE_SRC_DIR} SOURCE_FILES)
 # include all files from directory ${CMAKE_TEST_DIR}
 aux_source_directory(${CMAKE_TEST_DIR} TEST_FILES)
 
-add_executable(GeneticAlgorithmTest ${MAIN_TEST_FILE} ${TEST_FILES} ${SOURCE_FILES})
+add_executable(GeneticAlgorithmTest ${MAIN_TEST_FILE} ${SOURCE_FILES} ${TEST_FILES})
 
 # Command used to execute unit tests after build
 add_custom_command(
