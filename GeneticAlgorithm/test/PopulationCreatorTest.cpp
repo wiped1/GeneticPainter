@@ -1,4 +1,3 @@
-#include <gaul.h>
 #include "Catch/catch.hpp"
 
 #include "PopulationCreator.hpp"
