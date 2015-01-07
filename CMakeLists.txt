@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(GeneticPainter)
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 # CXX flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -18,38 +21,14 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/GeneticAlgorithm/include")
 set(MAIN_FILE main.cpp)
 set(MAIN_TEST_FILE ${CMAKE_TEST_DIR}/mainTest.cpp)
 
-#set(SOURCE_FILES
-#
-#)
-
-set(TEST_FILES
-    ${CMAKE_TEST_DIR}/ColorTest.cpp
-    ${CMAKE_TEST_DIR}/EllipseTest.cpp
-    ${CMAKE_TEST_DIR}/Vector2Test.cpp
-)
+set(SOURCE_FILES
+    ${CMAKE_SRC_DIR}/Ellipse.cpp
+    ${CMAKE_SRC_DIR}/EllipseCreator.cpp
+    ${CMAKE_SRC_DIR}/ImageSimilarityEvaluator.cpp)
 
 add_executable(GeneticPainter
     ${MAIN_FILE}
     ${SOURCE_FILES}
 )
 
-add_executable(GeneticPainterTest
-    ${MAIN_TEST_FILE}
-    ${TEST_FILES}
-    ${SOURCE_FILES}
-)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/GeneticAlgorithm)
-
-# Command used to execute unit tests after build
-add_custom_command(
-    TARGET GeneticPainterTest
-    POST_BUILD
-    COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/GeneticPainterTest
-)
-
-enable_testing(true)
-add_test(
-    NAME all
-    COMMAND GeneticPainterTest
-)
+target_link_libraries(GeneticPainter ${OpenCV_LIBS})
