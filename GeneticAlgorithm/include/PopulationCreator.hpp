@@ -20,17 +20,11 @@ private:
     PopulationCreator(const PopulationCreator&) { }
 
 public:
-    static PopulationCreator& instance();
     template <typename TGenotype,
     template <typename, typename = std::allocator<TGenotype>> class TCollection = std::vector>
-    Population<TGenotype, TCollection> createWithSize(unsigned int populationSize,
+    static Population<TGenotype, TCollection> createWithSize(unsigned int populationSize,
             const GenotypeCreator<TGenotype>  &genotypeCreator);
 };
-
-PopulationCreator& PopulationCreator::instance() {
-    static PopulationCreator instance;
-    return instance;
-}
 
 template <typename TGenotype,
 template <typename, typename> class TCollection>

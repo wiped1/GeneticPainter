@@ -31,8 +31,7 @@ SCENARIO( "PopulationCreator is used to create Population instances", "[populati
             const unsigned int GENOTYPE_SIZE = 50;
             IntegerGenotypeCreator genotypeCreator(GENOTYPE_SIZE);
 
-            population = PopulationCreator::instance()
-                    .createWithSize<Genotype<int>>(POPULATION_SIZE, genotypeCreator);
+            population = PopulationCreator::createWithSize<Genotype<int>>(POPULATION_SIZE, genotypeCreator);
 
             THEN( "The population size is correct" ) {
                 REQUIRE(population.getGenotypes().size() == POPULATION_SIZE);
