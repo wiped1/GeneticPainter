@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
 
     Mat src_base = imread(imgPath, 1);
 
-
     int thickness = 2;
     int lineType = 8;
 
