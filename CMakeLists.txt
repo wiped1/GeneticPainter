@@ -31,6 +31,4 @@ add_executable(GeneticPainter
     ${SOURCE_FILES}
 )
 
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/GeneticAlgorithm)
-
 target_link_libraries(GeneticPainter ${OpenCV_LIBS})
