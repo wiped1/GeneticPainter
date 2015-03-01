@@ -10,7 +10,7 @@ using namespace std;
 using namespace cv;
 
 int main(int argc, char **argv) {
-    string imgPath = "/Users/mckomo/Dropbox/Pictures/mona.jpg";
+    string imgPath = "../res/mona.jpg";
 
     Size windowSize(600, 400);
     mt19937 prng(time(0));
