@@ -6,11 +6,14 @@ using namespace cv;
 
 struct Ellipse {
 
+public:
+
     Point position;
     Size size;
     Scalar color;
 
-public:
+    Ellipse() = default;
+
     Ellipse(Point position, Size size, Scalar color);
 
 };

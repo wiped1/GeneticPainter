@@ -1,0 +1,3 @@
+[submodule "lib/GeneticAlgorithm"]
+	path = lib/GeneticAlgorithm
+	url = git@github.com:wiped1/GeneticAlgorithm.git

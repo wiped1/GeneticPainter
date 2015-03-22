@@ -1,55 +1,72 @@
 #include <stdio.h>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <ImageSimilarityEvaluator.h>
+#include "EllipseEvaluator.hpp"
 
-#include "Ellipse.h"
-#include "EllipseCreator.h"
+#include "Ellipse.hpp"
+#include "EllipseInitializer.hpp"
+#include "EllipsesCrossoverStrategy.hpp"
 
 using namespace std;
 using namespace cv;
 
 int main(int argc, char **argv) {
-    string imgPath = "../res/mona.jpg";
+        string imgPath = "../res/mona.jpg";
 
-    Size windowSize(600, 400);
-    mt19937 prng(time(0));
+        Size windowSize(600, 400);
+        mt19937 prng(time(0));
 
-    Mat src_base = imread(imgPath, 1);
+        Mat benchmarkImage = imread(imgPath, 1);
+    //    namedWindow("Display Image", WINDOW_AUTOSIZE);
 
-    int thickness = 2;
-    int lineType = 8;
+        EllipseInitializer ellipseInitializer(prng, windowSize, 100);
+        EllipseEvaluator evaluator(benchmarkImage);
 
-    EllipseCreator ellipse_generator(prng, windowSize, 100);
+        std::vector<Genotype<Ellipse>> genotypes;
 
-    Mat image(windowSize, CV_8UC3);
+        PopulationInitializer<Ellipse> populationInitializer(ellipseInitializer, 100);
+        Population<Ellipse> ellipsePopulation(populationInitializer);
+        SelectionStrategy<Ellipse> selectionStrategy(evaluator);
+        EllipsesCrossoverStrategy crossoverStrategy(prng);
 
-    for (int k=0; k < 100000; k++)
-    {
-        for (int i = 0; i < 200; i++)
-        {
-            Ellipse ellipse = ellipse_generator.generateRandom();
+        cout << ellipsePopulation.getGenotypes().size() << endl;
 
-            cv::ellipse(image,
-                    ellipse.position,
-                    ellipse.size,
-                    0,
-                    0,
-                    360,
-                    ellipse.color,
-                    -1,
-                    CV_8UC3);
+        while (true) {
+
+            try
+            {
+                selectionStrategy.eliminate(ellipsePopulation);
+
+                cout << evaluator.evaluate(ellipsePopulation.getGenotypes().front()) << endl;
+
+                crossoverStrategy.cross(ellipsePopulation);
+
+                cout << ellipsePopulation.getGenotypes().size() << endl;
+            }
+            catch (const exception& e)
+            {
+
+                cout << e.what();
+            }
         }
 
-        namedWindow("Display Image", WINDOW_AUTOSIZE);
 
-        ImageSimilarityEvaluator evaluator(src_base);
+    //    int thickness = 2;
+    //    int lineType = 8;
 
-        if (0 == k%100)
-            cout <<  evaluator.evaluate(src_base) << endl;
-    }
+//        cout << evaluator.evaluate(ellipsePopulation.getGenotypes().front());
 
-    waitKey(0);
+    //    for (int k=0; k < 100000; k++)
+    //    {
+    //        cout << evaluator.evaluate(ellipses);
+    //
+    //        if (0 == k%10)
+    //        {
+    //            imshow("Display Image", benchmarkImage);
+    //        }
+    //    }
 
-    return 0;
+
+
+        return 0;
 }

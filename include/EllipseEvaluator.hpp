@@ -2,11 +2,13 @@
 
 #include <random>
 #include <opencv2/core/core.hpp>
+#include "Ellipse.hpp"
+#include "GeneticAlgorithm.hpp"
 
 using namespace std;
 using namespace cv;
 
-class ImageSimilarityEvaluator {
+class EllipseEvaluator : public Evaluator<Ellipse> {
 
     Mat _benchmark_image;
     Mat _benchmark_image_hsv;
@@ -18,12 +20,14 @@ class ImageSimilarityEvaluator {
     const float* _hist_ranges[2] = {_hist_saturation_range, _hist_hue_range};
     const int  _hist_channels[2] =  {0, 1};
 
-    void _calculateImageHistogram(const Mat &image, MatND &histogram);
+    double _benchmark(Mat &image) const;
+    void _render(Mat &image, Genotype<Ellipse> &ellipse) const;
+    void _calculateImageHistogram(const Mat &image, MatND &histogram) const;
 
 public:
 
-    ImageSimilarityEvaluator(Mat benchmark_image);
-    double evaluate(Mat image);
+    EllipseEvaluator(Mat benchmark_image);
+    virtual double evaluate(Genotype<Ellipse> &ellipse) const;
 
 };
 
