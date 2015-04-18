@@ -5,12 +5,12 @@ using namespace cv;
 
 EllipseInitializer::EllipseInitializer(std::mt19937 &prng, cv::Size position_bound, unsigned int max_diameter)
 {
-    _prng = prng;
+    _prng = &prng;
     _position_bound = position_bound;
     _max_diameter = max_diameter;
 }
 
-void EllipseInitializer::initialize(std::vector<Ellipse> &ellipses)
+void EllipseInitializer::initialize(std::vector<Ellipse> &ellipses) const
 {
     ellipses.reserve(100);
 
@@ -22,26 +22,26 @@ void EllipseInitializer::initialize(std::vector<Ellipse> &ellipses)
 //    std::sort(ellipses.begin(), ellipses.end(), EllipseSorter::SortEllipseBySizeDesc);
 }
 
-Ellipse EllipseInitializer::_generateRandom()
+Ellipse EllipseInitializer::_generateRandom() const
 {
     return Ellipse(_generateRandomPosition(), _generateRandomSize(), _genrateRandomColor());
 }
 
-Point EllipseInitializer::_generateRandomPosition()
+Point EllipseInitializer::_generateRandomPosition() const
 {
     return Point(
             _generateRandomNumber(_position_bound.width),
             _generateRandomNumber(_position_bound.height));
 }
 
-Size EllipseInitializer::_generateRandomSize()
+Size EllipseInitializer::_generateRandomSize() const
 {
     return Size(
             _generateRandomNumber(_max_diameter),
             _generateRandomNumber(_max_diameter));
 }
 
-Scalar EllipseInitializer::_genrateRandomColor()
+Scalar EllipseInitializer::_genrateRandomColor() const
 {
     return Scalar(
             _generateRandomNumber(255),
@@ -49,7 +49,7 @@ Scalar EllipseInitializer::_genrateRandomColor()
             _generateRandomNumber(255));
 }
 
-unsigned int EllipseInitializer::_generateRandomNumber(unsigned int right_bound) {
-    return _prng() % (right_bound + 1);
+unsigned int EllipseInitializer::_generateRandomNumber(unsigned int rightBound) const {
+    return (*_prng)() % (rightBound + 1);
 }
 

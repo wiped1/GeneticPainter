@@ -5,28 +5,28 @@
 
 using namespace cv;
 
-EllipseEvaluator::EllipseEvaluator(Mat benchmark_image)
+EllipseEvaluator::EllipseEvaluator(Mat benchmarkImage)
 {
-    _benchmark_image = benchmark_image;
+    benchmarkImage = benchmarkImage;
 
-    cvtColor(benchmark_image, _benchmark_image_hsv, COLOR_BGR2HSV);
-    _calculateImageHistogram(_benchmark_image_hsv, _benchmark_image_histogram);
+    cvtColor(benchmarkImage, benchmarkImageHsv, COLOR_BGR2HSV);
+    calculateImageHistogram(benchmarkImageHsv, benchmarkImageHistogram);
 }
 
 double EllipseEvaluator::evaluate(Genotype<Ellipse> &ellipse) const
 {
     Mat image(Size(600, 400), CV_8UC3);
-    _render(image, ellipse);
-    return _benchmark(image);
+    render(image, ellipse);
+    return benchmark(image);
 }
 
-void EllipseEvaluator::_calculateImageHistogram(const Mat &image_hsv, Mat &histogram) const
+void EllipseEvaluator::calculateImageHistogram(const Mat &image_hsv, Mat &histogram) const
 {
-    calcHist(&image_hsv, 1, _hist_channels, Mat(), histogram, 2, _hist_size, (const float **) _hist_ranges, true, false);
+    calcHist(&image_hsv, 1, histChannels, Mat(), histogram, 2, histSize, (const float **) histRanges, true, false);
     normalize(histogram, histogram, 0, 1, NORM_MINMAX, -1, Mat());
 }
 
-void EllipseEvaluator::_render(Mat &image, Genotype<Ellipse> &ellipse) const
+void EllipseEvaluator::render(Mat &image, Genotype<Ellipse> &ellipse) const
 {
     for (Ellipse e : ellipse.getGenes())
     {
@@ -42,13 +42,13 @@ void EllipseEvaluator::_render(Mat &image, Genotype<Ellipse> &ellipse) const
     }
 }
 
-double EllipseEvaluator::_benchmark(Mat &image) const
+double EllipseEvaluator::benchmark(Mat &image) const
 {
     Mat image_hsv;
     Mat image_histogram;
 
     cvtColor(image, image_hsv, COLOR_BGR2HSV);
-    _calculateImageHistogram(image_hsv, image_histogram);
+    calculateImageHistogram(image_hsv, image_histogram);
 
-    return compareHist(_benchmark_image_histogram, image_histogram, 0);
+    return compareHist(benchmarkImageHistogram, image_histogram, 0);
 }

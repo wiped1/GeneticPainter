@@ -8,22 +8,22 @@ class EllipsesCrossoverStrategy : CrossoverStrategy<Ellipse> {
 
     const unsigned int PARENTS_PER_CHILD = 5;
 
-    std::mt19937 _prng;
+    std::mt19937 *prng;
 
 private:
 
     Genotype<Ellipse> _breed(
             std::vector<Genotype<Ellipse>>& ellipseGenotypes,
-            std::vector<unsigned int>& parentIndexes);
+            std::vector<unsigned int>& parentIndexes) const;
 
     void _fillWithRandomValues(
             std::vector<unsigned int>& vec,
             unsigned int maxValue,
-            unsigned int times);
+            unsigned int times) const;
 
 public:
 
     EllipsesCrossoverStrategy(std::mt19937 &prng);
-    virtual void cross(Population<Ellipse> &population);
+    void cross(Population<Ellipse> &population) const;
 
 };
