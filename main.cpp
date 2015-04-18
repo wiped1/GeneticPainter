@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include "EllipseEvaluator.hpp"
 
-#include "Ellipse.hpp"
+#include "EllipseEvaluator.hpp"
 #include "EllipseInitializer.hpp"
 #include "EllipsesCrossoverStrategy.hpp"
 #include "EllipseSelectionStrategy.hpp"
@@ -17,16 +16,14 @@ int main(int argc, char **argv) {
 
     Size windowSize(600, 400);
     mt19937 prng(time(0));
-
-    Mat benchmarkImage = imread(imgPath, 1);
-
+    Mat benchmarkImage = imread(imgPath, -1);
 
     EvolvingProcess<Ellipse> evolvingProcess(100);
     evolvingProcess << new EllipseInitializer(prng, windowSize, 100)
-    << new EllipseEvaluator(benchmarkImage)
-    << new EllipsesCrossoverStrategy(prng)
-    << new EllipsesMutationStrategy()
-    << new EllipseSelectionStrategy();
+        << new EllipseEvaluator(benchmarkImage)
+        << new EllipsesCrossoverStrategy(prng)
+        << new EllipsesMutationStrategy()
+        << new EllipseSelectionStrategy();
 
     evolvingProcess.evolve([](const Population<Ellipse>& pop, unsigned int generationNumber) -> bool {
         return generationNumber >= 10;

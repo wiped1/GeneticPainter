@@ -4,7 +4,7 @@
 #include "Ellipse.hpp"
 #include "GeneticAlgorithm.hpp"
 
-class EllipsesCrossoverStrategy : CrossoverStrategy<Ellipse> {
+class EllipsesCrossoverStrategy : public CrossoverStrategy<Ellipse> {
 
     const unsigned int PARENTS_PER_CHILD = 5;
 

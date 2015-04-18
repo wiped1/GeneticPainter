@@ -7,7 +7,7 @@
 #include "Ellipse.hpp"
 #include "MutationStrategy.hpp"
 
-class EllipsesMutationStrategy : MutationStrategy<Ellipse> {
+class EllipsesMutationStrategy : public MutationStrategy<Ellipse> {
     void mutate(Population<Ellipse>& population) const {
         // TODO
     }

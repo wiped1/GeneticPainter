@@ -8,7 +8,7 @@
 #include "SelectionStrategy.hpp"
 
 
-class EllipseSelectionStrategy : SelectionStrategy<Ellipse> {
+class EllipseSelectionStrategy : public SelectionStrategy<Ellipse> {
 
     void eliminate(Population<Ellipse> &population, typename Ranking<Ellipse>::Type ranking)
     {

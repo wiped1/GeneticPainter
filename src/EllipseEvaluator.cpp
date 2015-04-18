@@ -1,3 +1,4 @@
+#include <iostream>
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "GeneticAlgorithm.hpp"
@@ -30,15 +31,7 @@ void EllipseEvaluator::render(Mat &image, Genotype<Ellipse> &ellipse) const
 {
     for (Ellipse e : ellipse.getGenes())
     {
-        cv::ellipse(image,
-                e.position,
-                e.size,
-                0,
-                0,
-                360,
-                e.color,
-                -1,
-                CV_8UC3);
+        cv::ellipse(image, e.position, e.size, 0, 0, 360, e.color, -1, CV_8UC3);
     }
 }
 
