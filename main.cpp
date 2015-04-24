@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <ImageSimilarityEvaluator.h>
 
-#include "Ellipse.h"
-#include "EllipseCreator.h"
+#include "EllipseEvaluator.hpp"
+#include "EllipseInitializer.hpp"
+#include "EllipsesCrossoverStrategy.hpp"
+#include "EllipseSelectionStrategy.hpp"
+#include "EllipsesMutationStrategy.hpp"
 
 using namespace std;
 using namespace cv;
@@ -14,42 +16,18 @@ int main(int argc, char **argv) {
 
     Size windowSize(600, 400);
     mt19937 prng(time(0));
+    Mat benchmarkImage = imread(imgPath, -1);
 
-    Mat src_base = imread(imgPath, 1);
+    EvolvingProcess<Ellipse> evolvingProcess(100);
+    evolvingProcess << new EllipseInitializer(prng, windowSize, 100)
+        << new EllipseEvaluator(benchmarkImage)
+        << new EllipsesCrossoverStrategy(prng)
+        << new EllipsesMutationStrategy()
+        << new EllipseSelectionStrategy();
 
-    int thickness = 2;
-    int lineType = 8;
-
-    EllipseCreator ellipse_generator(prng, windowSize, 100);
-
-    Mat image(windowSize, CV_8UC3);
-
-    for (int k=0; k < 100000; k++)
-    {
-        for (int i = 0; i < 200; i++)
-        {
-            Ellipse ellipse = ellipse_generator.generateRandom();
-
-            cv::ellipse(image,
-                    ellipse.position,
-                    ellipse.size,
-                    0,
-                    0,
-                    360,
-                    ellipse.color,
-                    -1,
-                    CV_8UC3);
-        }
-
-        namedWindow("Display Image", WINDOW_AUTOSIZE);
-
-        ImageSimilarityEvaluator evaluator(src_base);
-
-        if (0 == k%100)
-            cout <<  evaluator.evaluate(src_base) << endl;
-    }
-
-    waitKey(0);
+    evolvingProcess.evolve([](const Population<Ellipse>& pop, unsigned int generationNumber) -> bool {
+        return generationNumber >= 10;
+    });
 
     return 0;
 }
