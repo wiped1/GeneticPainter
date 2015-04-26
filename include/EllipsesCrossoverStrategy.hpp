@@ -6,14 +6,13 @@
 
 class EllipsesCrossoverStrategy : public CrossoverStrategy<Ellipse> {
 
-    const unsigned int PARENTS_PER_CHILD = 5;
-
-    std::mt19937 *prng;
-
 private:
 
+    const unsigned int PARENTS_PER_CHILD = 5;
+    std::mt19937 *_prng;
+
     Genotype<Ellipse> breed(
-            std::vector<Genotype<Ellipse>> &ellipseGenotypes,
+            std::vector<Genotype<Ellipse>> &ellipsesGenotypes,
             std::vector<unsigned int> &parentIndexes) const;
 
     void populateWithRandom(

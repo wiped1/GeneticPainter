@@ -5,7 +5,7 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # CXX flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 # CMake directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
@@ -27,6 +27,6 @@ aux_source_directory(${CMAKE_SRC_DIR} SOURCE_FILES)
 add_executable(GeneticPainter
     ${MAIN_FILE}
     ${SOURCE_FILES}
-src/EllipseSelectionStrategy.cpp include/EllipseSelectionStrategy.hpp src/EllipsesMutationStrategy.cpp include/EllipsesMutationStrategy.hpp)
+src/EllipsesSelectionStrategy.cpp include/EllipsesSelectionStrategy.hpp src/EllipsesMutationStrategy.cpp include/EllipsesMutationStrategy.hpp)
 
 target_link_libraries(GeneticPainter ${OpenCV_LIBS})

@@ -1,24 +1,24 @@
+#include <EllipsesSizeComperator.hpp>
 #include "EllipsesCrossoverStrategy.hpp"
 
 
 //using namespace std;
 
-EllipsesCrossoverStrategy::EllipsesCrossoverStrategy(std::mt19937 &prng) : prng(&prng)
+EllipsesCrossoverStrategy::EllipsesCrossoverStrategy(std::mt19937 &prng) : _prng(&prng)
 {
     // do nothing
 }
 
 void EllipsesCrossoverStrategy::cross(Population<Ellipse> &population) const
 {
-    std::vector<unsigned int> parentIndexes;
+    std::vector<unsigned int> parentIndices;
     unsigned long populationSize = population.getGenotypes().size();
 
-//    std::cout << ellipseGenotypes.size() << std::endl;
 
     for (unsigned int i = 0; i < populationSize; i++)
     {
-        populateWithRandom(parentIndexes, (unsigned int) populationSize, PARENTS_PER_CHILD);
-        population.getGenotypes().push_back(breed(population.getGenotypes(), parentIndexes));
+        populateWithRandom(parentIndices, (unsigned int) populationSize, PARENTS_PER_CHILD);
+        population.getGenotypes().push_back(breed(population.getGenotypes(), parentIndices));
     }
 }
 
@@ -31,20 +31,20 @@ void EllipsesCrossoverStrategy::populateWithRandom(
 
     for (unsigned int i = 0; i < times; i++)
     {
-        vec.push_back((*prng)() % maxValue);
+        vec.push_back((*_prng)() % maxValue);
     }
 }
 
 Genotype<Ellipse> EllipsesCrossoverStrategy::breed(
-        std::vector<Genotype<Ellipse>> &ellipseGenotypes,
+        std::vector<Genotype<Ellipse>> &ellipsesGenotypes,
         std::vector<unsigned int> &parentIndexes) const
 {
-    unsigned long geneCount = ellipseGenotypes.front().getGenes().size();
+    unsigned long geneCount = ellipsesGenotypes.front().getGenes().size();
     std::vector<Ellipse> childGens;
 
     for (unsigned int i = 0; i < geneCount; i++)
     {
-        childGens.push_back(ellipseGenotypes.at((*prng)() % PARENTS_PER_CHILD).getGenes().at(i));
+        childGens.push_back(ellipsesGenotypes.at((*_prng)() % PARENTS_PER_CHILD).getGenes().at(i));
     }
 
     return Genotype<Ellipse>(childGens);
