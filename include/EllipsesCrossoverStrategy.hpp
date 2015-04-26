@@ -12,12 +12,12 @@ class EllipsesCrossoverStrategy : public CrossoverStrategy<Ellipse> {
 
 private:
 
-    Genotype<Ellipse> _breed(
-            std::vector<Genotype<Ellipse>>& ellipseGenotypes,
-            std::vector<unsigned int>& parentIndexes) const;
+    Genotype<Ellipse> breed(
+            std::vector<Genotype<Ellipse>> &ellipseGenotypes,
+            std::vector<unsigned int> &parentIndexes) const;
 
-    void _fillWithRandomValues(
-            std::vector<unsigned int>& vec,
+    void populateWithRandom(
+            std::vector<unsigned int> &vec,
             unsigned int maxValue,
             unsigned int times) const;
 

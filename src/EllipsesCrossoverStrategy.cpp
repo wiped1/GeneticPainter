@@ -17,13 +17,13 @@ void EllipsesCrossoverStrategy::cross(Population<Ellipse> &population) const
 
     for (unsigned int i = 0; i < populationSize; i++)
     {
-        _fillWithRandomValues(parentIndexes, (unsigned  int) populationSize, PARENTS_PER_CHILD);
-        population.getGenotypes().push_back(_breed(population.getGenotypes(), parentIndexes));
+        populateWithRandom(parentIndexes, (unsigned int) populationSize, PARENTS_PER_CHILD);
+        population.getGenotypes().push_back(breed(population.getGenotypes(), parentIndexes));
     }
 }
 
-void EllipsesCrossoverStrategy::_fillWithRandomValues(
-        std::vector<unsigned int>& vec,
+void EllipsesCrossoverStrategy::populateWithRandom(
+        std::vector<unsigned int> &vec,
         unsigned int maxValue,
         unsigned int times) const
 {
@@ -35,9 +35,9 @@ void EllipsesCrossoverStrategy::_fillWithRandomValues(
     }
 }
 
-Genotype<Ellipse> EllipsesCrossoverStrategy::_breed(
-        std::vector<Genotype<Ellipse>>& ellipseGenotypes,
-        std::vector<unsigned int>& parentIndexes) const
+Genotype<Ellipse> EllipsesCrossoverStrategy::breed(
+        std::vector<Genotype<Ellipse>> &ellipseGenotypes,
+        std::vector<unsigned int> &parentIndexes) const
 {
     unsigned long geneCount = ellipseGenotypes.front().getGenes().size();
     std::vector<Ellipse> childGens;
