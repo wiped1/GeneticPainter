@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <functional>
 #include "EllipsesMutationStrategy.hpp"
 
 EllipsesMutationStrategy::EllipsesMutationStrategy(std::mt19937 &prng) : _prng(&prng) {
