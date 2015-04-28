@@ -16,7 +16,7 @@ using namespace cv;
 
 int main(int argc, char **argv) {
 
-    string imgPath = "/Users/mckomo/Downloads/mone.jpeg";
+    string imgPath = "../res/mone.jpeg";
 
     namedWindow("Mona", WINDOW_AUTOSIZE );// Create a window for display.
 
@@ -36,11 +36,12 @@ int main(int argc, char **argv) {
         cout << status.getNumberOfGenerations() << std::endl;
         cout << status.getHighestFitness() << std::endl;
 
-        if (status.getNumberOfGenerations() >= 100)
+        if (status.getNumberOfGenerations() >= 10)
         {
             Mat image(benchmarkImage.size(), CV_8UC3);
             EllipsesRenderer::render(image, const_cast<Genotype<Ellipse>&>(status.getGenotypeWithBestFitness()).getGenes());
             imshow("Mona", image);
+            imwrite("./result.jpg", image);
             waitKey(0);                                          // Wait for a keystroke in the window
             return true;
         }
