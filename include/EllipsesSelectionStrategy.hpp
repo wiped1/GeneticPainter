@@ -11,5 +11,5 @@
 class EllipsesSelectionStrategy : public SelectionStrategy<Ellipse> {
 private:
 public:
-    void eliminate(Population<Ellipse> &population, typename Ranking<Ellipse>::Type ranking);
+    void eliminate(Population<Ellipse> &population, Ranking<Ellipse>::CollectionType ranking);
 };

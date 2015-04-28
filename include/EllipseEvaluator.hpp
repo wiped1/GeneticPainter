@@ -10,23 +10,25 @@ using namespace cv;
 
 class EllipseEvaluator : public Evaluator<Ellipse> {
 
-    Mat benchmarkImage;
-    Mat benchmarkImageHsv;
-    MatND benchmarkImageHistogram;
+private:
 
-    const int histSize[2] = {50, 60};
-    const float histSaturationRange[2] = { 0, 256};
-    const float histHueRange[2] = { 0, 180};
-    const float* histRanges[2] = {histSaturationRange, histHueRange};
-    const int  histChannels[2] =  {0, 1};
+    const Mat *_benchmarkImage;
+    Mat _benchmarkImageHsv;
+    MatND _benchmarkImageHistogram;
+
+    const int _histSize[2] = {50, 60};
+    const float _histSaturationRange[2] = { 0, 256};
+    const float _histHueRange[2] = { 0, 180};
+    const float* _histRanges[2] = {_histSaturationRange, _histHueRange};
+    const int _histChannels[2] =  {0, 1};
 
     double benchmark(Mat &image) const;
-    void render(Mat &image, Genotype<Ellipse> &ellipse) const;
-    void calculateImageHistogram(const Mat &image, MatND &histogram) const;
+//    void render(Mat &image, Genotype<Ellipse> &ellipse) const;
+    void calculateImageHistogram(const Mat &imageHsv, MatND &histogram) const;
 
 public:
 
-    EllipseEvaluator(Mat benchmarkImage);
+    EllipseEvaluator(const Mat &benchmarkImage);
     virtual double evaluate(Genotype<Ellipse> &ellipse) const;
 
 };

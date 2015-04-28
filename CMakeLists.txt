@@ -26,7 +26,7 @@ aux_source_directory(${CMAKE_SRC_DIR} SOURCE_FILES)
 #
 add_executable(GeneticPainter
     ${MAIN_FILE}
-    ${SOURCE_FILES}
-src/EllipsesSelectionStrategy.cpp include/EllipsesSelectionStrategy.hpp src/EllipsesMutationStrategy.cpp include/EllipsesMutationStrategy.hpp)
+    ${SOURCE_FILES})
+#src/EllipsesSelectionStrategy.cpp include/EllipsesSelectionStrategy.hpp src/EllipsesMutationStrategy.cpp include/EllipsesMutationStrategy.hpp src/EllipsesRenderer.cpp include/EllipsesRenderer.hpp src/EllipseGenerator.cpp include/EllipseGenerator.hpp)
 
 target_link_libraries(GeneticPainter ${OpenCV_LIBS})
