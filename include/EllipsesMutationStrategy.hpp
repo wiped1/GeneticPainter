@@ -7,12 +7,13 @@
 #include <random>
 #include "Ellipse.hpp"
 #include "MutationStrategy.hpp"
+#include "EllipseGenerator.hpp"
 
 class EllipsesMutationStrategy : public MutationStrategy<Ellipse> {
 
 private:
 
-    std::mt19937 *_prng;
+    const EllipseGenerator *_ellipseGenerator;
 
     void mutateGenotype(Genotype<Ellipse> &genotype) const;
     void mutateGene(Ellipse &ellipse) const;
@@ -22,7 +23,7 @@ private:
 
 public:
 
-    EllipsesMutationStrategy(std::mt19937 &prng);
+    EllipsesMutationStrategy(const EllipseGenerator &ellipseGenerator);
     void mutate(Population<Ellipse>& population) const;
 
 };

@@ -7,7 +7,7 @@
 #include "Population.hpp"
 
 
-void EllipsesSelectionStrategy::eliminate(Population<Ellipse> &population, typename Ranking<Ellipse>::Type ranking)
+void EllipsesSelectionStrategy::eliminate(Population<Ellipse> &population, Ranking<Ellipse>::CollectionType ranking)
 {
     auto& genotypes = population.getGenotypes();
     std::vector<Genotype<Ellipse>> afterElimination;
@@ -15,7 +15,6 @@ void EllipsesSelectionStrategy::eliminate(Population<Ellipse> &population, typen
     // iterate through half with higher values
     // and populate new vector
     auto it = ranking.begin();
-    std::cout << (*it).second << std::endl;
     typename std::vector<Genotype<Ellipse>>::size_type i;
     for (i = 0; i < genotypes.size() / 2; i++) {
         afterElimination.push_back(std::move(*(*it).first));

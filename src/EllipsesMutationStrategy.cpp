@@ -5,7 +5,7 @@
 #include <iostream>
 #include "EllipsesMutationStrategy.hpp"
 
-EllipsesMutationStrategy::EllipsesMutationStrategy(std::mt19937 &prng) : _prng(&prng) {
+EllipsesMutationStrategy::EllipsesMutationStrategy(const EllipseGenerator &ellipseGenerator) : _ellipseGenerator(&ellipseGenerator) {
     // NOTHING TO DO HERE
 }
 
@@ -17,30 +17,13 @@ void EllipsesMutationStrategy::mutate(Population<Ellipse> &population) const
 void EllipsesMutationStrategy::mutateGenotype(Genotype<Ellipse> &genotype) const
 {
     unsigned int genesCount = genotype.getGenes().size();
-    unsigned int mutataionExtent = genesCount * 0.1;
+    unsigned int mutataionExtent = genesCount * 0.01;
 
     for (int i = 0; i < mutataionExtent; i++)
     {
-        mutateGene(genotype.getGenes().at(rand() % genesCount));
+        auto radnomIndex = rand() % genesCount;
+        genotype.getGenes()[radnomIndex] = _ellipseGenerator->generateRandom();
     }
 }
 
-void EllipsesMutationStrategy::mutateGene(Ellipse &gene) const
-{
-    gene.size = mutateSize(gene.size);
-    gene.color = mutateColor(gene.color);
-    gene.position = mutatePosition(gene.position);
-}
-
-Size EllipsesMutationStrategy::mutateSize(Size size) const {
-    return cv::Size_<int>();
-}
-
-Scalar EllipsesMutationStrategy::mutateColor(Scalar scalar) const {
-    return cv::Scalar_<double>();
-}
-
-Point EllipsesMutationStrategy::mutatePosition(Point point) const {
-    return cv::Point_<int>();
-}
 
