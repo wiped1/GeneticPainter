@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <functional>
 #include "EllipsesMutationStrategy.hpp"
 
 using namespace gall;
