@@ -4,15 +4,12 @@
 
 #include "EllipsesRenderer.hpp"
 
-EllipsesRenderer::EllipsesRenderer(Size imageSize) {
+using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-}
-
-void EllipsesRenderer::render(Mat &canvas, const std::vector<Ellipse> &ellipses)
+void EllipsesRenderer::render(Mat &canvas, const EllipsesGenotype &genotype) const
 {
-    for (Ellipse e : ellipses)
-    {
+    std::for_each(genotype.cbegin(), genotype.cend(), [&canvas](auto &e){
         cv::ellipse(canvas, e.position, e.size, 0, 0, 360, e.color, -1, CV_8UC3);
-    }
+    });
 }
 

@@ -11,9 +11,9 @@ class EllipseGenerator {
 
 private:
 
-    Size _positionBound;
-    std::mt19937 *_prng;
-    unsigned int _maxDiameter;
+    Size positionBound;
+    std::mt19937 *prng;
+    unsigned int maxDiameter;
 
     Point generateRandomPosition() const;
     Size generateRandomSize() const;

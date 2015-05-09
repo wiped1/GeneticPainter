@@ -6,24 +6,18 @@
 
 #include <random>
 #include "Ellipse.hpp"
-#include "MutationStrategy.hpp"
+#include "MutationOperator.hpp"
 #include "EllipseGenerator.hpp"
 
-class EllipsesMutationStrategy : public MutationStrategy<Ellipse> {
+using namespace gall;
+using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
+class EllipsesMutationStrategy : public MutationOperator<EllipsesGenotype>
+{
 private:
-
-    const EllipseGenerator *_ellipseGenerator;
-
-    void mutateGenotype(Genotype<Ellipse> &genotype) const;
-    void mutateGene(Ellipse &ellipse) const;
-    Size mutateSize(Size size) const;
-    Scalar mutateColor(Scalar scalar) const;
-    Point mutatePosition(Point point) const;
+    EllipseGenerator ellipseGenerator;
 
 public:
-
-    EllipsesMutationStrategy(const EllipseGenerator &ellipseGenerator);
-    void mutate(Population<Ellipse>& population) const;
-
+    EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator);
+    void mutate(EllipsesGenotype &population) const;
 };

@@ -7,20 +7,15 @@
 
 #include "Ellipse.hpp"
 
-using namespace std;
 using namespace cv;
+using namespace gall;
+using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-class EllipsesGenotypeInitializer : public GenotypeInitializer<Ellipse> {
+class EllipsesGenotypeInitializer : public GenotypeInitializer<EllipsesGenotype> {
 
 private:
 
-    EllipseGenerator* _ellipseGenerator;
-
-    Ellipse generateRandom() const;
-    Point generateRandomPosition() const;
-    Size generateRandomSize() const;
-    Scalar generateRandomColor() const;
-    unsigned int generateRandomNumber(unsigned int rightBound) const;
+    EllipseGenerator *ellipseGenerator;
 
 public:
     EllipsesGenotypeInitializer(EllipseGenerator& ellipseGenerator);

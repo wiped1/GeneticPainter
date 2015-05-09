@@ -5,24 +5,23 @@
 #include <iostream>
 #include "EllipsesMutationStrategy.hpp"
 
-EllipsesMutationStrategy::EllipsesMutationStrategy(const EllipseGenerator &ellipseGenerator) : _ellipseGenerator(&ellipseGenerator) {
+using namespace gall;
+
+using EllipsesGenotype = Genotype<Ellipse, std::set>;
+
+EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator) : ellipseGenerator(ellipseGenerator) {
     // NOTHING TO DO HERE
 }
 
-void EllipsesMutationStrategy::mutate(Population<Ellipse> &population) const
+void EllipsesMutationStrategy::mutate(EllipsesGenotype &genotype) const
 {
-    std::for_each(population.getGenotypes().begin(), population.getGenotypes().end(), std::bind(&EllipsesMutationStrategy::mutateGenotype, this, std::placeholders::_1));
-}
+    long genesCount = std::distance(genotype.cbegin(), genotype.cend());
+    long mutationRange = static_cast<long>(genesCount * 0.01);
 
-void EllipsesMutationStrategy::mutateGenotype(Genotype<Ellipse> &genotype) const
-{
-    unsigned int genesCount = genotype.getGenes().size();
-    unsigned int mutataionExtent = genesCount * 0.01;
-
-    for (int i = 0; i < mutataionExtent; i++)
+    for (int i = 0; i < 2; i++)
     {
-        auto radnomIndex = rand() % genesCount;
-        genotype.getGenes()[radnomIndex] = _ellipseGenerator->generateRandom();
+        long randomIndex = rand() % genesCount;
+        *std::next(genotype.begin(), randomIndex) = ellipseGenerator.generateRandom();
     }
 }
 

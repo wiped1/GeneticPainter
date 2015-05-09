@@ -4,7 +4,7 @@
 
 using namespace cv;
 
-EllipsesGenotypeInitializer::EllipsesGenotypeInitializer(EllipseGenerator& ellipseGenerator) : _ellipseGenerator(&ellipseGenerator)
+EllipsesGenotypeInitializer::EllipsesGenotypeInitializer(EllipseGenerator& ellipseGenerator) : ellipseGenerator(&ellipseGenerator)
 {
     // NOTING TO DO
 }
@@ -13,8 +13,7 @@ void EllipsesGenotypeInitializer::initialize(std::vector<Ellipse> &ellipses) con
 {
     ellipses.reserve(100);
 
-    for(unsigned int i = 0; i < 100; i++)
-    {
-        ellipses.push_back(_ellipseGenerator->generateRandom());
+    for(unsigned int i = 0; i < 100; i++) {
+        ellipses.push_back(ellipseGenerator->generateRandom());
     }
 }

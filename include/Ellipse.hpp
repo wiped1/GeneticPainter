@@ -12,7 +12,7 @@ public:
     Size size;
     Scalar color;
 
-    Ellipse() = default;
     Ellipse(Point position, Size size, Scalar color);
-    bool operator==(const Ellipse& rhs) const;
+    bool operator<(const Ellipse& other) const;
+
 };

@@ -3,6 +3,6 @@
 #include "Ellipse.hpp"
 
 struct EllipsesSizeComperator {
-    bool operator()(const Ellipse& lhs, const Ellipse& rhs);
+    bool operator()(const Ellipse &lhs, const Ellipse &rhs) const;
 };
 

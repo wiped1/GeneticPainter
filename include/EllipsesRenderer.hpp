@@ -5,20 +5,20 @@
 #pragma once
 
 #include <opencv2/opencv.hpp>
+#include "Genotype.hpp"
 #include "Ellipse.hpp"
 
 using namespace cv;
+using namespace gall;
 
-class EllipsesRenderer {
+using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-private:
-
-    Size _imageSize;
+class EllipsesRenderer
+{
 
 public:
 
-    EllipsesRenderer(Size imageSize);
-    void static render(Mat &canvas, const std::vector<Ellipse> &ellipses);
+    void render(Mat &canvas, const EllipsesGenotype &ellipses) const;
 
 };
 
