@@ -16,8 +16,6 @@ using namespace std;
 using namespace cv;
 using namespace gall;
 
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
-
 int main(int argc, char **argv) {
 
     string imgPath = "../res/mone.jpeg";
@@ -29,7 +27,7 @@ int main(int argc, char **argv) {
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 100);
     EllipsesRenderer ellipsesRenderer;
 
-    EvolvingProcess<EllipsesGenotype> evolvingProcess(100);
+    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess(100);
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer)
         << new EllipsesEliminationStrategy()
@@ -37,7 +35,7 @@ int main(int argc, char **argv) {
         << new EllipsesBreedingOperator(prng)
         << new EllipsesMutationStrategy(ellipseGenerator);
 
-    evolvingProcess.evolve([&benchmarkImage, &ellipsesRenderer](ObservableEvolutionStatus<EllipsesGenotype>& status) -> bool {
+    evolvingProcess.evolve([&benchmarkImage, &ellipsesRenderer](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
         cout << status.getNumberOfGenerations() << std::endl;
         cout << status.getHighestFitness() << std::endl;
 

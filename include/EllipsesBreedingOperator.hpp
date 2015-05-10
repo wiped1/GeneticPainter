@@ -10,11 +10,11 @@
 #include "Genotype.hpp"
 #include "Population.hpp"
 #include "BreedingOperator.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace gall;
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-class EllipsesBreedingOperator : public BreedingOperator<EllipsesGenotype>
+class EllipsesBreedingOperator : public BreedingOperator<EllipsesGenotype::Type>
 {
 
 private:
@@ -24,7 +24,7 @@ private:
 public:
 
     EllipsesBreedingOperator(std::mt19937 &prng);
-    std::vector<EllipsesGenotype> breed(const Population<EllipsesGenotype> &population) const;
+    std::vector<EllipsesGenotype::Type> breed(const Population<EllipsesGenotype::Type> &population) const;
 
 };
 

@@ -3,11 +3,11 @@
 //
 
 #include "EllipsesEliminationStrategy.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace gall;
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-void EllipsesEliminationStrategy::eliminate(Population<EllipsesGenotype> &population)
+void EllipsesEliminationStrategy::eliminate(Population<EllipsesGenotype::Type> &population)
 {
     long range = static_cast<long>(std::ceil(std::distance(population.cbegin(), population.cend()) / 2.0)); /* 2.0 as floating point to prevent cast */
     auto begin = population.begin();

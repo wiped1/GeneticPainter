@@ -5,7 +5,6 @@
 #include "GeneticAlgorithm.hpp"
 
 using namespace cv;
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
 EllipsesEvaluator::EllipsesEvaluator(const Mat &benchmarkImage, const EllipsesRenderer &ellipsesRenderer) : benchmarkImage(&benchmarkImage), ellipsesRenderer(ellipsesRenderer)
 {
@@ -13,7 +12,7 @@ EllipsesEvaluator::EllipsesEvaluator(const Mat &benchmarkImage, const EllipsesRe
     calculateHistogram(benchmarkImageHistogram, benchmarkImageHsv);
 }
 
-double EllipsesEvaluator::evaluate(const EllipsesGenotype &genotype) const
+double EllipsesEvaluator::evaluate(const EllipsesGenotype::Type &genotype) const
 {
     Mat candidateImage(benchmarkImage->size(), CV_8UC3);
     ellipsesRenderer.render(candidateImage, genotype);

@@ -7,18 +7,17 @@
 #include <opencv2/opencv.hpp>
 #include "Genotype.hpp"
 #include "Ellipse.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace cv;
 using namespace gall;
-
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
 class EllipsesRenderer
 {
 
 public:
 
-    void render(Mat &canvas, const EllipsesGenotype &ellipses) const;
+    void render(Mat &canvas, const EllipsesGenotype::Type &ellipses) const;
 
 };
 

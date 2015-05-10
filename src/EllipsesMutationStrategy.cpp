@@ -5,18 +5,17 @@
 #include <iostream>
 #include <functional>
 #include "EllipsesMutationStrategy.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace gall;
-
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
 EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator) : ellipseGenerator(ellipseGenerator) {
     // NOTHING TO DO HERE
 }
 
-void EllipsesMutationStrategy::mutate(EllipsesGenotype &genotype) const
+void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
 {
-    long genesCount = std::distance(genotype.cbegin(), genotype.cend());
+    long genesCount = std::distance(genotype.begin(), genotype.end());
     long mutationRange = static_cast<long>(genesCount * 0.01);
 
     for (int i = 0; i < 2; i++)

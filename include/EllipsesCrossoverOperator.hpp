@@ -5,12 +5,11 @@
 #include "Genotype.hpp"
 #include "CrossoverOperator.hpp"
 #include "EllipsesBreedingOperator.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace gall;
 
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
-
-class EllipsesCrossoverOperator : public CrossoverOperator<EllipsesGenotype>
+class EllipsesCrossoverOperator : public CrossoverOperator<EllipsesGenotype::Type>
 {
 private:
     const unsigned int PARENTS_PER_CHILD = 5;
@@ -18,5 +17,5 @@ private:
 
 public:
     EllipsesCrossoverOperator(std::mt19937 &prng);
-    EllipsesGenotype cross(std::vector<EllipsesGenotype> &parents) const;
+    EllipsesGenotype::Type cross(std::vector<EllipsesGenotype::Type> &parents) const;
 };
