@@ -8,16 +8,16 @@
 #include "Ellipse.hpp"
 #include "MutationOperator.hpp"
 #include "EllipseGenerator.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace gall;
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-class EllipsesMutationStrategy : public MutationOperator<EllipsesGenotype>
+class EllipsesMutationStrategy : public MutationOperator<EllipsesGenotype::Type>
 {
 private:
     EllipseGenerator ellipseGenerator;
 
 public:
     EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator);
-    void mutate(EllipsesGenotype &population) const;
+    void mutate(EllipsesGenotype::Type &population) const;
 };

@@ -6,14 +6,13 @@
 #include "Genotype.hpp"
 #include "EllipsesRenderer.hpp"
 #include "Evaluator.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace std;
 using namespace cv;
 using namespace gall;
 
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
-
-class EllipsesEvaluator : public Evaluator<EllipsesGenotype> {
+class EllipsesEvaluator : public Evaluator<EllipsesGenotype::Type> {
 
 private:
 
@@ -34,7 +33,7 @@ private:
 public:
 
     EllipsesEvaluator(const Mat &benchmarkImage, const EllipsesRenderer &ellipsesRenderer);
-    virtual double evaluate(const EllipsesGenotype &ellipse) const;
+    virtual double evaluate(const EllipsesGenotype::Type &ellipse) const;
 
 };
 

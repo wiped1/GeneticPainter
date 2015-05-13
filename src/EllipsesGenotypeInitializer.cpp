@@ -1,6 +1,6 @@
 #include <EllipseGenerator.hpp>
 #include "EllipsesGenotypeInitializer.hpp"
-#include "EllipsesSizeComperator.hpp"
+#include "EllipsesSizeComparator.hpp"
 
 using namespace cv;
 
@@ -9,10 +9,8 @@ EllipsesGenotypeInitializer::EllipsesGenotypeInitializer(EllipseGenerator& ellip
     // NOTING TO DO
 }
 
-void EllipsesGenotypeInitializer::initialize(std::vector<Ellipse> &ellipses) const
+void EllipsesGenotypeInitializer::initialize(EllipsesGenotype::Collection &ellipses) const
 {
-    ellipses.reserve(100);
-
     for(unsigned int i = 0; i < 100; i++) {
         ellipses.push_back(ellipseGenerator->generateRandom());
     }

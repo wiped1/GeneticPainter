@@ -9,13 +9,13 @@
 #include "Genotype.hpp"
 #include "Population.hpp"
 #include "EliminationStrategy.hpp"
+#include "EllipsesGenotype.hpp"
 
 using namespace gall;
-using EllipsesGenotype = Genotype<Ellipse, std::set>;
 
-class EllipsesEliminationStrategy : public EliminationStrategy<EllipsesGenotype>
+class EllipsesEliminationStrategy : public EliminationStrategy<EllipsesGenotype::Type>
 {
 private:
 public:
-    void eliminate(Population<EllipsesGenotype> &population);
+    void eliminate(Population<EllipsesGenotype::Type> &population);
 };
