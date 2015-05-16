@@ -17,8 +17,19 @@ using namespace cv;
 using namespace gall;
 
 int main(int argc, char **argv) {
-
-    string imgPath = "../res/mone.jpeg";
+    if (argc < 5) {
+        std::cout << "Usage: GeneticPainter [image path] [output directory]"
+                     "[number of generations] [render frequency] [numberOfThreads = 1]" << std::endl;
+        return 1;
+    }
+    string imgPath = argv[1];
+    string outputDirectory = argv[2];
+    int numberOfGenerations = std::atoi(argv[3]);
+    int renderFrequency = std::atoi(argv[4]);
+    int numberOfThreads = 1;
+    if (argv[5]) {
+        numberOfThreads = std::atoi(argv[5]);
+    }
 
     namedWindow("Mona", WINDOW_AUTOSIZE);// Create a window for display.
 
@@ -27,7 +38,7 @@ int main(int argc, char **argv) {
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 100);
     EllipsesRenderer ellipsesRenderer;
 
-    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess(100);
+    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess(100, numberOfThreads);
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer)
         << new EllipsesEliminationStrategy()
@@ -35,18 +46,20 @@ int main(int argc, char **argv) {
         << new EllipsesBreedingOperator(prng)
         << new EllipsesMutationStrategy(ellipseGenerator);
 
-    evolvingProcess.evolve([&benchmarkImage, &ellipsesRenderer](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
+    evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
         cout << status.getNumberOfGenerations() << std::endl;
         cout << status.getHighestFitness() << std::endl;
 
-        if (status.getNumberOfGenerations() >= 1000)
-        {
+        if (status.getNumberOfGenerations() % renderFrequency == 0) {
             Mat image(benchmarkImage.size(), CV_8UC3);
             ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
-            imshow("Mone", image);
-            waitKey(0);                                          // Wait for a keystroke in the window
-            return true;
+            std::time_t timestamp = std::time(nullptr);
+            char* result = std::asctime(std::localtime(&timestamp));
+            std::stringstream filename; //{"./result" + result + ".jpg"};
+            filename << outputDirectory << "/" << "result" << timestamp << ".jpg";
+            imwrite(filename.str(), image);
         }
+        return status.getNumberOfGenerations() >= numberOfGenerations;
     });
 
     return 0;
