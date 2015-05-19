@@ -9,9 +9,10 @@ const double MAX_WIDTH_HEIGHT_RATIO = 1.2;
 
 EllipseGenerator::EllipseGenerator(std::mt19937 &prng,
                                    cv::Size positionBound,
-                                   unsigned int minDiameter, unsigned int maxDiameter) :
+                                   unsigned int minDiameter, unsigned int maxDiameter,
+                                   double minWidthHeightRatio, double maxWidthHeightRatio) :
         prng(&prng), positionBound(positionBound), minDiameter(minDiameter), maxDiameter(maxDiameter),
-        widthHeightRatioDist(new std::uniform_real_distribution<double>(MIN_WIDTH_HEIGHT_RATIO, MAX_WIDTH_HEIGHT_RATIO))
+        widthHeightRatioDist(new std::uniform_real_distribution<double>(minWidthHeightRatio, maxWidthHeightRatio))
 {
     // NOTHING TO DO
 }
@@ -30,10 +31,9 @@ Point EllipseGenerator::generateRandomPosition() const
 
 Size EllipseGenerator::generateRandomSize() const
 {
-    int radius = generateRandomRange(minDiameter, maxDiameter);
-    double ratio = (*widthHeightRatioDist)((*prng));
-    int width = static_cast<int>(radius * ratio);
-    int height = static_cast<int>(radius / ratio);
+    int height = generateRandomRange(minDiameter, maxDiameter);
+    double ratio = (*widthHeightRatioDist)(*prng);
+    int width = static_cast<int>(height * ratio);
 
     return Size(
             width,

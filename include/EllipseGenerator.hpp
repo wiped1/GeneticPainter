@@ -30,7 +30,8 @@ public:
     unsigned int getMaxDiameter() const;
 
     EllipseGenerator(std::mt19937 &prng, cv::Size positionBound,
-                     unsigned int minDiameter, unsigned int maxDiameter);
+                     unsigned int minDiameter, unsigned int maxDiameter,
+                     double minWidthHeightRatio, double maxWidthHeightRatio);
     Ellipse generateRandom() const;
 
 };
