@@ -5,6 +5,7 @@
 #pragma once
 
 #include <random>
+#include <memory>
 #include "Ellipse.hpp"
 #include "MutationOperator.hpp"
 #include "EllipseGenerator.hpp"

@@ -28,22 +28,22 @@ void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
 
         if (result >= 0.5 && result < 0.6)
         {
-            alterSize(ellipse);
+            this->alterSize(ellipse);
             return;
         }
         if (result >= 0.6 && result < 0.7)
         {
-            alterPosition(ellipse);
+            this->alterPosition(ellipse);
             return;
         }
         if (result >= 0.7 && result < 0.8)
         {
-            alterColor(ellipse);
+            this->alterColor(ellipse);
             return;
         }
         if (result >= 0.8 && result < 0.82)
         {
-            swapWithRandom(&ellipse);
+            this->swapWithRandom(&ellipse);
             return;
         }
     });
