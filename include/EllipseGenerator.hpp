@@ -22,6 +22,9 @@ private:
 
 public:
 
+    const Size& getPositionBound() const;
+    unsigned int getMaxDiameter() const;
+
     EllipseGenerator(std::mt19937 &prng, cv::Size positionBound, unsigned int maxDiameter);
     Ellipse generateRandom() const;
 

@@ -40,3 +40,11 @@ unsigned int EllipseGenerator::generateRandomNonnegative(unsigned int rightBound
 {
     return (*prng)() % (rightBound + 1);
 }
+
+const Size &EllipseGenerator::getPositionBound() const {
+    return positionBound;
+}
+
+unsigned int EllipseGenerator::getMaxDiameter() const {
+    return maxDiameter;
+}

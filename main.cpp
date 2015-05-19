@@ -2,7 +2,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
-#define GALL_USE_TIMER
+//#define GALL_USE_TIMER
 #include "ObservableEvolutionStatus.hpp"
 #include "Ellipse.hpp"
 #include "EllipsesEvaluator.hpp"
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
         << new DefaultEliminationStrategy<EllipsesGenotype::Type>
         << new EllipsesCrossoverOperator(prng)
         << new EllipsesBreedingOperator(prng)
-        << new EllipsesMutationStrategy(ellipseGenerator);
+        << new EllipsesMutationStrategy(ellipseGenerator, prng);
 
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
         cout << status.getNumberOfGenerations() << std::endl;
