@@ -43,6 +43,8 @@ int main(int argc, char **argv) {
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 100);
     EllipsesRenderer ellipsesRenderer;
 
+    Mat image(benchmarkImage.size(), CV_8UC3);
+    namedWindow("Result", WINDOW_AUTOSIZE);// Create a window for display.
 
     EvolvingProcess<EllipsesGenotype::Type> evolvingProcess;
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
@@ -52,19 +54,24 @@ int main(int argc, char **argv) {
         << new EllipsesBreedingOperator(prng)
         << new EllipsesMutationStrategy(ellipseGenerator, prng);
 
+
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
+
         cout << status.getNumberOfGenerations() << std::endl;
         cout << status.getHighestFitness() << std::endl;
 
+        ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
+        cv::imshow("Result", image);
+        cv::waitKey(1);
+
         if (status.getNumberOfGenerations() % renderFrequency == 0) {
-            Mat image(benchmarkImage.size(), CV_8UC3);
-            ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
             std::time_t timestamp = std::time(nullptr);
             char* result = std::asctime(std::localtime(&timestamp));
             std::stringstream filename; //{"./result" + result + ".jpg"};
             filename << outputDirectory << "/" << "result" << timestamp << ".jpg";
             imwrite(filename.str(), image);
         }
+
         return status.getNumberOfGenerations() >= EvolvingEnvironmentProvider::getInstance().targetGenerationsCount;
     });
 
