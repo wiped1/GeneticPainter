@@ -4,6 +4,7 @@
 
 #include "EllipsesBreedingOperator.hpp"
 #include "EllipsesGenotype.hpp"
+#include "EvolvingEnvironment.hpp"
 
 using namespace gall;
 
@@ -16,7 +17,7 @@ std::vector<EllipsesGenotype::Type> EllipsesBreedingOperator::breed(const Popula
     std::vector<EllipsesGenotype::Type> parents;
     long populationSize = std::distance(population.cbegin(), population.cend());
 
-    for (unsigned int i = 0; i < 5; i++)
+    for (unsigned int i = 0; i < EvolvingEnvironmentProvider::getInstance().parentsPerChild; i++)
     {
         long randomIndex = (*prng)() % populationSize;
         auto genotype = (*std::next(population.cbegin(), randomIndex)).first;

@@ -12,7 +12,6 @@ using namespace gall;
 class EllipsesCrossoverOperator : public CrossoverOperator<EllipsesGenotype::Type>
 {
 private:
-    const unsigned int PARENTS_PER_CHILD = 5;
     std::mt19937 *prng;
 
 public:

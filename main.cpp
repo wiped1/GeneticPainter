@@ -2,15 +2,17 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
-
+#define GALL_USE_TIMER
 #include "ObservableEvolutionStatus.hpp"
 #include "Ellipse.hpp"
 #include "EllipsesEvaluator.hpp"
 #include "EllipsesGenotypeInitializer.hpp"
 #include "EllipsesCrossoverOperator.hpp"
 #include "EllipsesEliminationStrategy.hpp"
+#include "DefaultEliminationStrategy.hpp"
 #include "EllipsesMutationStrategy.hpp"
 #include "EllipsesRenderer.hpp"
+#include "EvolvingEnvironment.hpp"
 
 using namespace std;
 using namespace cv;
@@ -31,17 +33,21 @@ int main(int argc, char **argv) {
         numberOfThreads = std::atoi(argv[5]);
     }
 
-    namedWindow("Mona", WINDOW_AUTOSIZE);// Create a window for display.
-
+    EvolvingEnvironmentProvider::getInstance().populationSize = 100;
+    EvolvingEnvironmentProvider::getInstance().genesCount = 50;
+    EvolvingEnvironmentProvider::getInstance().numberOfThreads = numberOfThreads;
+    EvolvingEnvironmentProvider::getInstance().targetGenerationsCount = numberOfGenerations;
+    EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
     mt19937 prng(time(0));
     Mat benchmarkImage = imread(imgPath, -1);
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 100);
     EllipsesRenderer ellipsesRenderer;
 
-    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess(100, numberOfThreads);
+
+    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess;
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer)
-        << new EllipsesEliminationStrategy()
+        << new DefaultEliminationStrategy<EllipsesGenotype::Type>
         << new EllipsesCrossoverOperator(prng)
         << new EllipsesBreedingOperator(prng)
         << new EllipsesMutationStrategy(ellipseGenerator);
@@ -59,7 +65,7 @@ int main(int argc, char **argv) {
             filename << outputDirectory << "/" << "result" << timestamp << ".jpg";
             imwrite(filename.str(), image);
         }
-        return status.getNumberOfGenerations() >= numberOfGenerations;
+        return status.getNumberOfGenerations() >= EvolvingEnvironmentProvider::getInstance().targetGenerationsCount;
     });
 
     return 0;
