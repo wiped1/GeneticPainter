@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
     EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
     mt19937 prng(time(0));
     Mat benchmarkImage = imread(imgPath, -1);
-    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 100);
+    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 3, 100);
     EllipsesRenderer ellipsesRenderer;
 
 

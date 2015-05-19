@@ -4,7 +4,14 @@
 
 #include "EllipseGenerator.hpp"
 
-EllipseGenerator::EllipseGenerator(std::mt19937 &prng, cv::Size positionBound, unsigned int maxDiameter) : prng(&prng), positionBound(positionBound), maxDiameter(maxDiameter)
+const double MIN_WIDTH_HEIGHT_RATIO = 0.8;
+const double MAX_WIDTH_HEIGHT_RATIO = 1.2;
+
+EllipseGenerator::EllipseGenerator(std::mt19937 &prng,
+                                   cv::Size positionBound,
+                                   unsigned int minDiameter, unsigned int maxDiameter) :
+        prng(&prng), positionBound(positionBound), minDiameter(minDiameter), maxDiameter(maxDiameter),
+        widthHeightRatioDist(new std::uniform_real_distribution<double>(MIN_WIDTH_HEIGHT_RATIO, MAX_WIDTH_HEIGHT_RATIO))
 {
     // NOTHING TO DO
 }
@@ -23,9 +30,14 @@ Point EllipseGenerator::generateRandomPosition() const
 
 Size EllipseGenerator::generateRandomSize() const
 {
+    int radius = generateRandomRange(minDiameter, maxDiameter);
+    double ratio = (*widthHeightRatioDist)((*prng));
+    int width = static_cast<int>(radius * ratio);
+    int height = static_cast<int>(radius / ratio);
+
     return Size(
-            generateRandomNonnegative(maxDiameter),
-            generateRandomNonnegative(maxDiameter));
+            width,
+            height);
 }
 
 Scalar EllipseGenerator::generateRandomColor() const
@@ -39,6 +51,10 @@ Scalar EllipseGenerator::generateRandomColor() const
 unsigned int EllipseGenerator::generateRandomNonnegative(unsigned int rightBound) const
 {
     return (*prng)() % (rightBound + 1);
+}
+
+unsigned int EllipseGenerator::generateRandomRange(unsigned int min, unsigned int max) const {
+    return min + ((*prng)() % (int)(max - min + 1));
 }
 
 const Size &EllipseGenerator::getPositionBound() const {
