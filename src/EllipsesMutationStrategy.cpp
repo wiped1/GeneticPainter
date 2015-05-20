@@ -15,7 +15,7 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
         : ellipseGenerator(ellipseGenerator)
         , prng(&prng)
         , alterationDistribution(new std::uniform_real_distribution<double>(0.0, 1.0))
-        , alterationRatio(new std::uniform_real_distribution<double>(0.8, 1.2))
+        , alterationRatio(new std::uniform_real_distribution<double>(0.95, 1.05))
 {
     // Nothing to do
 }

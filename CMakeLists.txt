@@ -27,6 +27,11 @@ aux_source_directory(${CMAKE_SRC_DIR} SOURCE_FILES)
 add_executable(GeneticPainter
     ${MAIN_FILE}
     ${SOURCE_FILES})
+
+add_executable(ColorTest
+    tests/ColorTest.cpp
+    ${SOURCE_FILES})
 #src/EllipsesEliminationStrategy.cpp include/EllipsesEliminationStrategy.hpp src/EllipsesMutationStrategy.cpp include/EllipsesMutationStrategy.hpp src/EllipsesRenderer.cpp include/EllipsesRenderer.hpp src/EllipseGenerator.cpp include/EllipseGenerator.hpp)
 
 target_link_libraries(GeneticPainter ${OpenCV_LIBS})
+target_link_libraries(ColorTest ${OpenCV_LIBS})

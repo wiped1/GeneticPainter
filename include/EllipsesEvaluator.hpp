@@ -27,7 +27,7 @@ private:
     const float* histRanges[2] = {histSaturationRange, histHueRange};
     const int histChannels[2] =  {0, 1};
 
-    double benchmark(Mat &image) const;
+    double benchmark(const Mat &image) const;
     void calculateHistogram(MatND &histogram, const Mat &imageHsv) const;
 
 public:

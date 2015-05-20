@@ -3,6 +3,7 @@
 #include "EllipsesEvaluator.hpp"
 #include "EllipsesRenderer.hpp"
 #include "GeneticAlgorithm.hpp"
+#include "math.h"
 
 using namespace cv;
 
@@ -25,13 +26,22 @@ void EllipsesEvaluator::calculateHistogram(MatND &histogram, const Mat &imageHsv
     normalize(histogram, histogram, 0, 1, NORM_MINMAX, -1, Mat());
 }
 
-double EllipsesEvaluator::benchmark(Mat &image) const
+double EllipsesEvaluator::benchmark(const Mat &image) const
 {
     Mat imageHsv;
     Mat imageHistogram;
 
-    cvtColor(image, imageHsv, COLOR_BGR2HSV);
+    cvtColor(image, imageHsv, CV_BGR2HSV);
     calculateHistogram(imageHistogram, imageHsv);
 
-    return compareHist(benchmarkImageHistogram, imageHistogram, 0);
+    // Calculate the L2 relative error between images.
+    double errorL2 = norm(image, *benchmarkImage, CV_L2);
+    // Convert to a reasonable scale, since L2 error is summed across all pixels of the image.
+    double similarity = errorL2 / (double)( image.rows * image.cols );
+//    return similarity;
+
+    double histSimilarity = compareHist(benchmarkImageHistogram, imageHistogram, 0);
+
+    return histSimilarity;
+    return (similarity + histSimilarity) / 2;
 }

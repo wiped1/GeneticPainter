@@ -6,7 +6,7 @@
 
 void EllipsesRenderer::render(Mat &canvas, const EllipsesGenotype::Type &genotype) const
 {
-    std::for_each(genotype.cbegin(), genotype.cend(), [&canvas](auto &e){
+    std::for_each(genotype.cbegin(), genotype.cend(), [&](auto &e){
         cv::ellipse(canvas, e.position, e.size, 0, 0, 360, e.color, -1, CV_8UC3);
     });
 }
