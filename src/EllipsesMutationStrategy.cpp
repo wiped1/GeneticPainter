@@ -59,10 +59,9 @@ void EllipsesMutationStrategy::alterSize(Ellipse &ellipse) const
 
 void EllipsesMutationStrategy::alterColor(Ellipse &ellipse) const
 {
-    for (int i = 0; i < 2; ++i)
-    {
-        ellipse.color[i] = (int) (ellipse.color[i] * getRandomRatio()) % 256;
-    }
+    ellipse.color[0] = (int) (ellipse.color[0] * getRandomRatio()) % 256;
+    ellipse.color[1] = (int) (ellipse.color[1] * getRandomRatio()) % 256;
+    ellipse.color[2] = (int) (ellipse.color[2] * getRandomRatio()) % 256;
 }
 
 void EllipsesMutationStrategy::alterPosition(Ellipse &ellipse) const
