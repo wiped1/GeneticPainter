@@ -12,7 +12,7 @@
 using namespace gall;
 
 EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
-        : ellipseGenerator(ellipseGenerator)
+        : ellipseGenerator(&ellipseGenerator)
         , prng(&prng)
         , alterationDistribution(new std::uniform_real_distribution<double>(0.0, 1.0))
         , alterationRatio(new std::uniform_real_distribution<double>(0.95, 1.05))
@@ -53,8 +53,8 @@ void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
 
 void EllipsesMutationStrategy::alterSize(Ellipse &ellipse) const
 {
-    ellipse.size.height = std::min<unsigned int>(ellipse.size.height * getRandomRatio(), ellipseGenerator.getMaxDiameter());
-    ellipse.size.width = std::min<unsigned int>(ellipse.size.width * getRandomRatio(), ellipseGenerator.getMaxDiameter());
+    ellipse.size.height = std::min<unsigned int>(ellipse.size.height * getRandomRatio(), ellipseGenerator->getMaxDiameter());
+    ellipse.size.width = std::min<unsigned int>(ellipse.size.width * getRandomRatio(), ellipseGenerator->getMaxDiameter());
 }
 
 void EllipsesMutationStrategy::alterColor(Ellipse &ellipse) const
@@ -66,13 +66,13 @@ void EllipsesMutationStrategy::alterColor(Ellipse &ellipse) const
 
 void EllipsesMutationStrategy::alterPosition(Ellipse &ellipse) const
 {
-    ellipse.position.x = std::min<unsigned int>(ellipse.position.x * getRandomRatio(), ellipseGenerator.getPositionBound().width);
-    ellipse.position.y = std::min<unsigned int>(ellipse.position.y * getRandomRatio(), ellipseGenerator.getPositionBound().height);
+    ellipse.position.x = std::min<unsigned int>(ellipse.position.x * getRandomRatio(), ellipseGenerator->getPositionBound().width);
+    ellipse.position.y = std::min<unsigned int>(ellipse.position.y * getRandomRatio(), ellipseGenerator->getPositionBound().height);
 }
 
 void EllipsesMutationStrategy::swapWithRandom(Ellipse *ellipse) const
 {
-    *ellipse = std::move(ellipseGenerator.generateRandom());
+    *ellipse = std::move(ellipseGenerator->generateRandom());
 }
 
 double EllipsesMutationStrategy::getRandomRatio() const {
