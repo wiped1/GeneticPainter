@@ -166,6 +166,24 @@ struct AlterRedByRatioFunctor : public MutationFunctor<EllipsesGenotype::Collect
     }
 };
 
+struct AlterAlphaByRatioFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+{
+    const std::unique_ptr<std::uniform_real_distribution<double>> rd;
+    std::mt19937* prng;
+
+    AlterAlphaByRatioFunctor(std::mt19937& prng)
+            : prng(&prng)
+            , rd(new std::uniform_real_distribution<double>(0.92, 1.08))
+    {
+        // do nothing
+    }
+
+    virtual void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const
+    {
+        ellipse.color[3] = std::min(ellipse.color[3] * getDistributedRandom(*rd, *prng), 1.0);
+    }
+};
+
 struct AlterColorBySumFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
 {
     std::mt19937* prng;

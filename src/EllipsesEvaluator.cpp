@@ -17,6 +17,7 @@ EllipsesEvaluator::EllipsesEvaluator(const Mat &benchmarkImage, const EllipsesRe
 double EllipsesEvaluator::evaluate(const EllipsesGenotype::Type &genotype) const
 {
     Mat candidateImage(benchmarkImage->size(), CV_8UC3, Scalar(0));
+
     ellipsesRenderer.render(candidateImage, genotype);
     cvtColor(candidateImage, candidateImage, COLOR_BGR2HSV);
 
