@@ -1,55 +1,25 @@
-/*
-The MIT License (MIT)
-
-Copyright (c) <year> <copyright holders>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
 #include "Catch/catch.hpp"
 
 #include "Ellipse.hpp"
 
-SCENARIO( "Ellipse contains data about diameter and color", "[ellipse]" ) {
-    GIVEN( "A pseudorandom engine" ) {
-        std::random_device rd;
-        std::mt19937 gen(rd());
+SCENARIO("Ellipse contains data about diameter and color", "[ellipse]") {
+    GIVEN("A pseudorandom engine") {
+        WHEN("An Ellipse is initialized with position, size and color") {
 
-        WHEN( "An Ellipse is initialized with maxDiameter" ) {
-            unsigned int maxDiameter = 10;
-            int maxWidth = 640;
-            int maxHeight = 480;
-            Ellipse ellipse(gen, maxDiameter, maxWidth, maxHeight);
+            cv::Point position(300, 200);
+            cv::Size  size(600, 400);
+            cv::Scalar color(255, 0, 0);
 
-            THEN( "The diameter is larger or equal zero" ) {
-                REQUIRE( ellipse.diameter >= 0);
+            Ellipse ellipse(position, size, color);
+
+            THEN("It has supplied position") {
+                REQUIRE(ellipse.position == position);
             }
-            AND_THEN( "The diameters is smaller or equal max diameter" ) {
-                REQUIRE( ellipse.diameter <= maxDiameter );
+            THEN("It has supplied size") {
+                REQUIRE(ellipse.size == size);
             }
-            AND_THEN( "The position is larger or equal zero" ) {
-                REQUIRE( ellipse.position.x >= 0 );
-                REQUIRE( ellipse.position.y >= 0 );
-            }
-            AND_THEN( "The position is smaller or equal max width and height" ) {
-                REQUIRE( ellipse.position.x <= maxWidth );
-                REQUIRE( ellipse.position.y <= maxHeight );
+            THEN("It has supplied color") {
+                REQUIRE(ellipse.color == color);
             }
         }
     }
