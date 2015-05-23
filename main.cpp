@@ -33,8 +33,8 @@ int main(int argc, char **argv) {
         numberOfThreads = std::atoi(argv[5]);
     }
 
-    EvolvingEnvironmentProvider::getInstance().populationSize = 100;
-    EvolvingEnvironmentProvider::getInstance().genesCount = 50;
+    EvolvingEnvironmentProvider::getInstance().populationSize = 200;
+    EvolvingEnvironmentProvider::getInstance().genesCount = 100;
     EvolvingEnvironmentProvider::getInstance().numberOfThreads = numberOfThreads;
     EvolvingEnvironmentProvider::getInstance().targetGenerationsCount = numberOfGenerations;
     EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
@@ -45,7 +45,6 @@ int main(int argc, char **argv) {
     EllipsesRenderer ellipsesRenderer;
     ImageComparator imageComparator;
 
-    Mat image(benchmarkImage.size(), CV_8UC3);
     namedWindow("Result", WINDOW_AUTOSIZE);// Create a window for display.
     cv::imshow("Benchmark image", benchmarkImage);
     cv::waitKey(1);
@@ -60,11 +59,13 @@ int main(int argc, char **argv) {
 
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
 
+        Mat image(benchmarkImage.size(), CV_8UC3);
+
         cout << status.getNumberOfGenerations() << std::endl;
         cout << status.getHighestFitness() << std::endl;
 
         ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
-//        cv::cvtColor(image, image, CV_BGR2RGB);
+
         cv::imshow("Result", image);
         cv::waitKey(1);
 
