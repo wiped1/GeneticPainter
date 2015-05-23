@@ -33,8 +33,8 @@ int main(int argc, char **argv) {
         numberOfThreads = std::atoi(argv[5]);
     }
 
-    EvolvingEnvironmentProvider::getInstance().populationSize = 200;
-    EvolvingEnvironmentProvider::getInstance().genesCount = 100;
+    EvolvingEnvironmentProvider::getInstance().populationSize = 50;
+    EvolvingEnvironmentProvider::getInstance().genesCount = 150;
     EvolvingEnvironmentProvider::getInstance().numberOfThreads = numberOfThreads;
     EvolvingEnvironmentProvider::getInstance().targetGenerationsCount = numberOfGenerations;
     EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
@@ -58,12 +58,12 @@ int main(int argc, char **argv) {
         << new EllipsesMutationStrategy(ellipseGenerator, prng);
 
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
-
-        Mat image(benchmarkImage.size(), CV_8UC3);
-
+        Mat image(benchmarkImage.size(), CV_8UC3, Scalar(0));
         cout << status.getNumberOfGenerations() << std::endl;
         cout << status.getHighestFitness() << std::endl;
-
+//        std::cout << "Num. of genes: " << std::distance(status.getGenotypeWithBestFitness().cbegin(),
+//                                   status.getGenotypeWithBestFitness().cend()) << std::endl;
+        std::cout << "Num. of genes: " << status.getGenotypeWithBestFitness().ccollection().size() << std::endl;
         ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
 
         cv::imshow("Result", image);
