@@ -1,5 +1,5 @@
 //
-// Created by Maciej Komorowski on 23.05.15.
+// Created by Mckomo on 23.05.15.
 //
 
 #pragma once
@@ -24,9 +24,9 @@ struct AlterSizeFunctor : public MutationFunctor<EllipsesGenotype::Collection, E
     std::mt19937* prng;
 
     AlterSizeFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
-            : ellipseGenerator(&ellipseGenerator),
-              prng(&prng),
-              rd(new std::uniform_real_distribution<double>(0.95, 1.05))
+            : ellipseGenerator(&ellipseGenerator)
+            , prng(&prng)
+            , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
     {
         // do nothing
     }
@@ -49,9 +49,9 @@ struct MakeSmallerFunctor : public MutationFunctor<EllipsesGenotype::Collection,
     std::mt19937* prng;
 
     MakeSmallerFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
-            : ellipseGenerator(&ellipseGenerator),
-              prng(&prng),
-              rd(new std::uniform_real_distribution<double>(0.95, 1.00))
+            : ellipseGenerator(&ellipseGenerator)
+            , prng(&prng)
+            , rd(new std::uniform_real_distribution<double>(0.95, 1.00))
     {
         // do nothing
     }
@@ -252,7 +252,8 @@ struct CopyNewEllipseFunctor : MutationFunctor<EllipsesGenotype::Collection, Ell
     std::mt19937* prng;
 
     CopyNewEllipseFunctor(const EllipseGenerator& ellipseGenerator, std::mt19937& prng)
-            : ellipseGenerator(&ellipseGenerator), prng(&prng)
+            : ellipseGenerator(&ellipseGenerator)
+            , prng(&prng)
     {
         // do nothing
     }
