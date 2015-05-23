@@ -13,12 +13,18 @@ EllipsesGenotype::Type EllipsesCrossoverOperator::cross(std::vector<EllipsesGeno
 {
     EllipsesGenotype::Collection childGens;
 
-    for (unsigned int i = 0; i < EvolvingEnvironmentProvider::getInstance().genesCount; i++)
+//    for (unsigned int i = 0; i < EvolvingEnvironmentProvider::getInstance().genesCount; i++)
+//    {
+//        auto donor = parents.at((*prng)() % EvolvingEnvironmentProvider::getInstance().parentsPerChild);
+//        auto gene = *std::next(donor.cbegin(), i % std::distance(donor.cbegin(), donor.cend()));
+//        childGens.push_back(gene);
+//    }
+    for (unsigned int i = 0; i < std::distance((*parents.begin()).begin(), (*parents.begin()).end()); i++)
     {
         auto donor = parents.at((*prng)() % EvolvingEnvironmentProvider::getInstance().parentsPerChild);
-        auto gene = *std::next(donor.cbegin(), i);
+        auto gene = *std::next(donor.cbegin(), i % std::distance(donor.cbegin(), donor.cend()));
         childGens.push_back(gene);
     }
 
-    return EllipsesGenotype::Type(childGens);
+    return EllipsesGenotype::Type(parents.front());
 }

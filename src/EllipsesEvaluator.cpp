@@ -16,7 +16,7 @@ EllipsesEvaluator::EllipsesEvaluator(const Mat &benchmarkImage, const EllipsesRe
 
 double EllipsesEvaluator::evaluate(const EllipsesGenotype::Type &genotype) const
 {
-    Mat candidateImage(benchmarkImage->size(), CV_8UC3);
+    Mat candidateImage(benchmarkImage->size(), CV_8UC3, Scalar(0));
     ellipsesRenderer.render(candidateImage, genotype);
     return 1 - imageComparator.compareByPixels(candidateImage, *benchmarkImage);
 }
