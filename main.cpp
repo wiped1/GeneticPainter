@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
     Mat benchmarkImage = imread(imgPath, -1);
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 100, 0.8, 1.2);
     EllipsesRenderer ellipsesRenderer;
+    ImageComparator imageComparator;
 
     Mat image(benchmarkImage.size(), CV_8UC3);
     namedWindow("Result", WINDOW_AUTOSIZE);// Create a window for display.
@@ -51,7 +52,7 @@ int main(int argc, char **argv) {
 
     EvolvingProcess<EllipsesGenotype::Type> evolvingProcess;
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
-        << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer)
+        << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer, imageComparator)
         << new DefaultEliminationStrategy<EllipsesGenotype::Type>
         << new EllipsesCrossoverOperator(prng)
         << new EllipsesBreedingOperator(prng)
@@ -63,7 +64,7 @@ int main(int argc, char **argv) {
         cout << status.getHighestFitness() << std::endl;
 
         ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
-        cv::cvtColor(image, image, CV_RGB2BGR);
+//        cv::cvtColor(image, image, CV_BGR2RGB);
         cv::imshow("Result", image);
         cv::waitKey(1);
 
