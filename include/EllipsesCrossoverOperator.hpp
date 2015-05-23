@@ -13,6 +13,7 @@ class EllipsesCrossoverOperator : public CrossoverOperator<EllipsesGenotype::Typ
 {
 private:
     std::mt19937 *prng;
+    std::unique_ptr<std::uniform_real_distribution<float>> rd;
 
 public:
     EllipsesCrossoverOperator(std::mt19937 &prng);

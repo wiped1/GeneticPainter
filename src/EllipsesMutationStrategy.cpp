@@ -145,8 +145,10 @@ struct AlterPositionFunctor : public MutationFunctor<EllipsesGenotype::Collectio
     std::mt19937* prng;
     const std::unique_ptr<std::uniform_real_distribution<double>> alterationRatio;
     AlterPositionFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
-    : ellipseGenerator(&ellipseGenerator), prng(&prng), alterationRatio(
-            new std::uniform_real_distribution<double>(0.5, 1.5)) {
+    : ellipseGenerator(&ellipseGenerator),
+      prng(&prng),
+      alterationRatio(new std::uniform_real_distribution<double>(0.5, 1.5))
+    {
         // do nothing
     }
 
