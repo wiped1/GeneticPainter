@@ -23,6 +23,7 @@ EllipsesGenotype::Type EllipsesCrossoverOperator::cross(std::vector<EllipsesGeno
 
         auto &donor = parents.at(donerIndex);
         auto gene = *std::next(donor.cbegin(), i % std::distance(donor.cbegin(), donor.cend()));
+
         childGens.push_back(gene);
     }
 

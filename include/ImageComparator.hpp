@@ -11,15 +11,14 @@
 
 using namespace cv;
 
-class ImageComparator {
-
+class ImageComparator
+{
 private:
 
     const int histSize[3] = {60, 32, 32};
     const float histSaturationRange[2] = {0, 256};
     const float histHueRange[2] = {0, 180};
     const float histValueRange[2] = {0, 256};
-
     const float* histRanges[3] = {histHueRange, histSaturationRange, histValueRange};
     const int histChannels[3] =  {0, 1, 2};
 
@@ -28,5 +27,4 @@ public:
     double compareByPixels(const Mat &lhsHsv, const Mat &rhsHsv) const;
     double compareHistograms(MatND &lhs, MatND &rhs);
     void calculateHistogram(MatND &histogram, const Mat &imageHsv) const;
-
 };
