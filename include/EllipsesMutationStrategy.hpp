@@ -6,6 +6,7 @@
 
 #include <random>
 #include <memory>
+#include <MutationProbabilityDistribution.hpp>
 #include "Ellipse.hpp"
 #include "MutationOperator.hpp"
 #include "EllipseGenerator.hpp"
@@ -20,6 +21,7 @@ private:
     std::unique_ptr<std::uniform_real_distribution<double>> alterationDistribution;
     std::unique_ptr<std::uniform_real_distribution<double>> alterationRatio;
     EllipseGenerator* ellipseGenerator;
+    MutationProbabilityDistribution dist;
     void alterSize(Ellipse &ellipse) const;
     void alterColor(Ellipse &ellipse) const;
     void alterPosition(Ellipse &ellipse) const;

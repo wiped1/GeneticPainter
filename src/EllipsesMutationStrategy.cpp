@@ -8,16 +8,27 @@
 #include <EllipsesSizeComparator.hpp>
 #include "EllipsesMutationStrategy.hpp"
 #include "EllipsesGenotype.hpp"
+#include "MutationFunctor.hpp"
+#include "MutationProbabilityDistribution.hpp"
 
 using namespace gall;
+
+struct AlterSizeFunctor;
+struct AlterPositionFunctor;
+struct AlterColorFunctor;
+struct SwapWithRandomFunctor;
 
 EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
         : ellipseGenerator(&ellipseGenerator)
         , prng(&prng)
         , alterationDistribution(new std::uniform_real_distribution<double>(0.0, 1.0))
         , alterationRatio(new std::uniform_real_distribution<double>(0.95, 1.05))
+        , dist(prng)
 {
-    // Nothing to do
+    dist.add<AlterColorFunctor>(0.1);
+    dist.add<AlterPositionFunctor>(0.1);
+    dist.add<AlterColorFunctor>(0.1);
+    dist.add<SwapWithRandomFunctor>(0.02);
 }
 
 void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
@@ -51,30 +62,37 @@ void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
     std::sort(genotype.rbegin(), genotype.rend(), EllipsesSizeComparator());
 }
 
-void EllipsesMutationStrategy::alterSize(Ellipse &ellipse) const
-{
-    ellipse.size.height = std::min<unsigned int>(ellipse.size.height * getRandomRatio(), ellipseGenerator->getMaxDiameter());
-    ellipse.size.width = std::min<unsigned int>(ellipse.size.width * getRandomRatio(), ellipseGenerator->getMaxDiameter());
-}
+struct AlterSizeFunctor : public MutationFunctor<Ellipse> {
+    virtual void operator()(Ellipse& ellipse) const {
+        ellipse.size.height = std::min<unsigned int>(ellipse.size.height * getRandomRatio(), ellipseGenerator->getMaxDiameter());
+        ellipse.size.width = std::min<unsigned int>(ellipse.size.width * getRandomRatio(), ellipseGenerator->getMaxDiameter());
+    }
+};
 
-void EllipsesMutationStrategy::alterColor(Ellipse &ellipse) const
-{
-    ellipse.color[0] = (int) (ellipse.color[0] * getRandomRatio()) % 256;
-    ellipse.color[1] = (int) (ellipse.color[1] * getRandomRatio()) % 256;
-    ellipse.color[2] = (int) (ellipse.color[2] * getRandomRatio()) % 256;
-}
-
-void EllipsesMutationStrategy::alterPosition(Ellipse &ellipse) const
-{
-    ellipse.position.x = std::min<unsigned int>(ellipse.position.x * getRandomRatio(), ellipseGenerator->getPositionBound().width);
-    ellipse.position.y = std::min<unsigned int>(ellipse.position.y * getRandomRatio(), ellipseGenerator->getPositionBound().height);
-}
-
-void EllipsesMutationStrategy::swapWithRandom(Ellipse *ellipse) const
-{
-    *ellipse = std::move(ellipseGenerator->generateRandom());
-}
-
-double EllipsesMutationStrategy::getRandomRatio() const {
-    return (*alterationRatio)(*prng);
-}
+//void EllipsesMutationStrategy::alterSize(Ellipse &ellipse) const
+//{
+//    ellipse.size.height = std::min<unsigned int>(ellipse.size.height * getRandomRatio(), ellipseGenerator->getMaxDiameter());
+//    ellipse.size.width = std::min<unsigned int>(ellipse.size.width * getRandomRatio(), ellipseGenerator->getMaxDiameter());
+//}
+//
+//void EllipsesMutationStrategy::alterColor(Ellipse &ellipse) const
+//{
+//    ellipse.color[0] = (int) (ellipse.color[0] * getRandomRatio()) % 256;
+//    ellipse.color[1] = (int) (ellipse.color[1] * getRandomRatio()) % 256;
+//    ellipse.color[2] = (int) (ellipse.color[2] * getRandomRatio()) % 256;
+//}
+//
+//void EllipsesMutationStrategy::alterPosition(Ellipse &ellipse) const
+//{
+//    ellipse.position.x = std::min<unsigned int>(ellipse.position.x * getRandomRatio(), ellipseGenerator->getPositionBound().width);
+//    ellipse.position.y = std::min<unsigned int>(ellipse.position.y * getRandomRatio(), ellipseGenerator->getPositionBound().height);
+//}
+//
+//void EllipsesMutationStrategy::swapWithRandom(Ellipse *ellipse) const
+//{
+//    *ellipse = std::move(ellipseGenerator->generateRandom());
+//}
+//
+//double EllipsesMutationStrategy::getRandomRatio() const {
+//    return (*alterationRatio)(*prng);
+//}
