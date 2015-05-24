@@ -21,7 +21,7 @@ using namespace gall;
 int main(int argc, char **argv) {
     if (argc < 5) {
         std::cout << "Usage: GeneticPainter [image path] [output directory]"
-                     "[number of generations] [render frequency] [numberOfThreads = 1]" << std::endl;
+                     "[number of generations] [render frequency] [number of threads = 1] [show image = 1]" << std::endl;
         return 1;
     }
     string imgPath = argv[1];
@@ -29,9 +29,12 @@ int main(int argc, char **argv) {
     int numberOfGenerations = std::atoi(argv[3]);
     int renderFrequency = std::atoi(argv[4]);
     int numberOfThreads = 1;
-    if (argv[5]) {
+    int showImage = 1;
+
+    if (argv[5])
         numberOfThreads = std::atoi(argv[5]);
-    }
+    if (argv[6])
+        showImage = std::atoi(argv[6]);
 
     EvolvingEnvironmentProvider::getInstance().populationSize = 50;
     EvolvingEnvironmentProvider::getInstance().genesCount = 150;
@@ -40,14 +43,17 @@ int main(int argc, char **argv) {
     EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
 
     mt19937 prng(time(0));
-    Mat benchmarkImage = imread(imgPath, -1);
+    Mat benchmarkImage = imread(imgPath);
+    Scalar avarageColor = cv::mean(benchmarkImage, Mat());
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 100, 0.8, 1.2);
-    EllipsesRenderer ellipsesRenderer;
+    EllipsesRenderer ellipsesRenderer(avarageColor);
     ImageComparator imageComparator;
 
-    namedWindow("Result", WINDOW_AUTOSIZE);// Create a window for display.
-    cv::imshow("Benchmark image", benchmarkImage);
-    cv::waitKey(1);
+    if (showImage > 0) {
+        namedWindow("Result", WINDOW_AUTOSIZE);// Create a window for display.
+        cv::imshow("Benchmark image", benchmarkImage);
+        cv::waitKey(1);
+    }
 
     EvolvingProcess<EllipsesGenotype::Type> evolvingProcess;
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
@@ -58,17 +64,19 @@ int main(int argc, char **argv) {
         << new EllipsesMutationStrategy(ellipseGenerator, prng);
 
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
+
         Mat image(benchmarkImage.size(), CV_8UC3, Scalar(0));
-        cout << status.getNumberOfGenerations() << std::endl;
-        cout << status.getHighestFitness() << std::endl;
-//        std::cout << "Num. of genes: " << std::distance(status.getGenotypeWithBestFitness().cbegin(),
-//                                   status.getGenotypeWithBestFitness().cend()) << std::endl;
+
+        std::cout << status.getNumberOfGenerations() << std::endl;
+        std::cout << status.getHighestFitness() << std::endl;
         std::cout << "Num. of genes: " << status.getGenotypeWithBestFitness().ccollection().size() << std::endl;
+
         ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
 
-        cv::imshow("Result", image);
-        cv::waitKey(1);
-
+        if (showImage > 0) {
+            cv::imshow("Result", image);
+            cv::waitKey(1);
+        }
 
         if (status.getNumberOfGenerations() % renderFrequency == 0) {
             std::time_t timestamp = std::time(nullptr);

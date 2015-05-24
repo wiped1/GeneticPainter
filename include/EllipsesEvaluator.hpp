@@ -13,7 +13,8 @@ using namespace std;
 using namespace cv;
 using namespace gall;
 
-class EllipsesEvaluator : public Evaluator<EllipsesGenotype::Type> {
+class EllipsesEvaluator : public Evaluator<EllipsesGenotype::Type>
+{
 
 private:
 
@@ -31,9 +32,6 @@ private:
 
     const float* histRanges[3] = {histSaturationRange, histHueRange, histValueRange};
     const int histChannels[3] =  {0, 1, 2};
-
-    double benchmark(const Mat &image) const;
-    void calculateHistogram(MatND &histogram, const Mat &imageHsv) const;
 
 public:
 

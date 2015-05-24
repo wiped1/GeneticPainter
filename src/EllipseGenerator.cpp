@@ -45,7 +45,8 @@ Scalar EllipseGenerator::generateRandomColor() const
     return Scalar(
             generateRandomNonnegative(255),
             generateRandomNonnegative(255),
-            generateRandomNonnegative(255));
+            generateRandomNonnegative(255),
+            0.3 + 0.7 * generateRandomNonnegative(255) / 255.0);
 }
 
 unsigned int EllipseGenerator::generateRandomNonnegative(unsigned int rightBound) const

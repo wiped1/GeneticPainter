@@ -2,7 +2,8 @@
 
 #include "Ellipse.hpp"
 
-struct EllipsesSizeComparator {
+struct EllipsesSizeComparator
+{
     bool operator()(const Ellipse &lhs, const Ellipse &rhs) const;
 };
 
