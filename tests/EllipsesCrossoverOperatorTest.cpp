@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <cmath>
 #include "Catch/catch.hpp"
 #include "EllipsesCrossoverOperator.hpp"
 
@@ -15,7 +16,7 @@ SCENARIO("EllipesCorssoverOperator merges two genotypes into one", "[imageCompar
 
     GIVEN("two parent genotypes filled times with alarge number of two different ellipses") {
 
-        unsigned long genotypeSize = 10000;
+        unsigned long genotypeSize = 200000;
 
         Ellipse blueEllipse(Point(0, 0), Size(100, 100), Scalar(255, 0, 0));
         Ellipse redEllipse(Point(0, 0), Size(100, 100), Scalar(0, 0, 255));
@@ -35,18 +36,19 @@ SCENARIO("EllipesCorssoverOperator merges two genotypes into one", "[imageCompar
                 REQUIRE(std::distance(child.cbegin(), child.cend()) == genotypeSize);
             }
 
-            THEN("new genotype should have equal number of gens from both parents")
+            THEN("new genotype should have similar number of gens from both parents")
             {
-                long blueCounter = count(child.cbegin(), child.cend(), blueEllipse);
-                long redCounter = count(child.cbegin(), child.cend(), redEllipse);
+                long blueCounter = static_cast<double>(count(child.cbegin(), child.cend(), blueEllipse));
+                long redCounter = static_cast<double>(count(child.cbegin(), child.cend(), redEllipse));
+                double colorDelta = static_cast<double>(std::abs(blueCounter - redCounter)) / genotypeSize;
 
-                REQUIRE(blueCounter == redCounter);
+                REQUIRE(colorDelta < 0.5);
             }
 
-            THEN("new genotype corssed fragments average length should be a quoter of the large number value")
+            THEN("new genotype corssed fragments average length should be a around quoter of the large number value")
             {
                 long currentLength = 1;
-                Ellipse currentFragmentEllipse = blueEllipse;
+                Ellipse currentFragmentEllipse = *child.begin();
                 std::vector<long> fragmentsLength;
 
                 for (auto& ellipse : child)
@@ -61,9 +63,11 @@ SCENARIO("EllipesCorssoverOperator merges two genotypes into one", "[imageCompar
                     currentLength++;
                 }
 
+                long quoterSize = genotypeSize / 4;
                 long meanLength = std::accumulate(fragmentsLength.begin(), fragmentsLength.end(), 0.0) / fragmentsLength.size();
+                long meanDelta = std::abs(quoterSize - meanLength);
 
-                REQUIRE(meanLength == genotypeSize / 4);
+                REQUIRE(meanDelta < quoterSize / 1.5);
             }
 
         }

@@ -14,7 +14,7 @@ EllipsesGenotype::Type EllipsesCrossoverOperator::cross(std::vector<EllipsesGeno
     EllipsesGenotype::Collection childGens;
     unsigned long donerIndex = 0;
     long geneCount = std::distance((parents.at(donerIndex)).begin(), (parents.at(donerIndex)).end());
-    double crossingProbability = geneCount / 400;
+    double crossingProbability = 4.0 / geneCount;
 
     for (unsigned int i = 0; i < geneCount; i++)
     {
