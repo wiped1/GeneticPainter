@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <fstream>
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -13,6 +13,7 @@
 #include "EllipsesMutationStrategy.hpp"
 #include "EllipsesRenderer.hpp"
 #include "EvolvingEnvironment.hpp"
+#include "EvolvingStatusSerializer.hpp"
 
 using namespace std;
 using namespace cv;
@@ -55,7 +56,7 @@ int main(int argc, char **argv) {
         cv::waitKey(1);
     }
 
-    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess;
+    EvolvingProcess<EllipsesGenotype::Type, std::mt19937> evolvingProcess(prng);
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer, imageComparator)
         << new DefaultEliminationStrategy<EllipsesGenotype::Type>
@@ -78,12 +79,20 @@ int main(int argc, char **argv) {
             cv::waitKey(1);
         }
 
-        if (status.getNumberOfGenerations() % renderFrequency == 0) {
+        if (status.getNumberOfGenerations() % renderFrequency == 0)
+        {
             std::time_t timestamp = std::time(nullptr);
             char* result = std::asctime(std::localtime(&timestamp));
-            std::stringstream filename; //{"./result" + result + ".jpg"};
-            filename << outputDirectory << "/" << "result" << timestamp << ".jpg";
-            imwrite(filename.str(), image);
+            std::stringstream filename, imageFile, jsonFile; //{"./result" + result + ".jpg"};
+
+            filename << outputDirectory << "/" << "result" << timestamp;
+            imageFile << filename.str() << ".png";
+            jsonFile << filename.str() << ".json";
+
+            cv::imwrite(imageFile.str(), image);
+            std::ofstream jsonOut(jsonFile.str());
+            jsonOut << EvolvingStatusSerializer::toJson(status);
+            jsonOut.close();
         }
 
         return status.getNumberOfGenerations() >= EvolvingEnvironmentProvider::getInstance().targetGenerationsCount;

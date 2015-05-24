@@ -15,6 +15,7 @@ set(CMAKE_TEST_DIR                 "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 
 include_directories("${CMAKE_INCLUDE_DIR}")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/lib/GeneticAlgorithm/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/lib/JSON/src")
 
 set(MAIN_FILE main.cpp)
 set(MAIN_TEST_FILE ${CMAKE_TEST_DIR}/runner.cpp)
