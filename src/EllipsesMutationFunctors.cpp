@@ -13,7 +13,7 @@ double getDistributedRandom(Distribution &rd, std::mt19937 &prng)
 
 AlterSizeFunctor::AlterSizeFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
         : ellipseGenerator(&ellipseGenerator), prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
+        , rd(new std::uniform_real_distribution<double>(0.8, 1.2))
 {
     // do nothing
 }
@@ -30,7 +30,7 @@ void AlterSizeFunctor::operator()(EllipsesGenotype::Collection& genotype, Ellips
 
 MakeSmallerFunctor::MakeSmallerFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
         : ellipseGenerator(&ellipseGenerator) , prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.95, 1.00))
+        , rd(new std::uniform_real_distribution<double>(0.85, 1.00))
 {
     // do nothing
 }
@@ -48,7 +48,7 @@ void MakeSmallerFunctor::operator()(EllipsesGenotype::Collection& genotype, Elli
 MakeBiggerFunctor::MakeBiggerFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
         : ellipseGenerator(&ellipseGenerator)
         , prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(1.00, 1.05))
+        , rd(new std::uniform_real_distribution<double>(1.00, 1.15))
 {
     // do nothing
 }
@@ -156,9 +156,13 @@ void CopyNewEllipseFunctor::operator()(EllipsesGenotype::Collection& genotype, E
 {
     AlterPositionFunctor alterPosition(*ellipseGenerator, *prng);
     AlterSizeFunctor alterSize(*ellipseGenerator, *prng);
+    AlterAlphaByRatioFunctor alterAlpha(*prng);
+    AlterColorByRatioFunctor alterColor(*prng);
     Ellipse e(ellipse);
     alterPosition(genotype, e);
     alterSize(genotype, e);
+    alterAlpha(genotype, e);
+    alterColor(genotype, e);
     genotype.push_back(e);
 }
 
@@ -183,4 +187,8 @@ void RemoveRandomFunctor::operator()(EllipsesGenotype::Collection& genotype, Ell
     genotype.erase(std::next(genotype.begin(), (*prng)() % genotype.size()));
 }
 
-
+void RemoveHalfFunctor::operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const
+{
+    genotype.erase(genotype.begin(), std::prev(genotype.end(),
+            std::distance(genotype.begin(), genotype.end()) / 2));
+}

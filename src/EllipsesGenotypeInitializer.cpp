@@ -15,7 +15,7 @@ void EllipsesGenotypeInitializer::initialize(EllipsesGenotype::Collection &ellip
 //    for(unsigned int i = 0; i < EvolvingEnvironmentProvider::getInstance().genesCount; i++) {
 //        ellipses.emplace_back(ellipseGenerator->generateRandom());
 //    }
-    for(unsigned int i = 0; i < 1; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         ellipses.emplace_back(ellipseGenerator->generateRandom());
     }
 }

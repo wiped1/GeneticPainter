@@ -20,16 +20,17 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
         , mutationDistribution(new std::uniform_real_distribution<double>(0.0, 1.0))
         , dist(prng)
 {
-    dist.add(new AlterSizeFunctor(ellipseGenerator, prng),10);
-    dist.add(new AlterPositionFunctor(ellipseGenerator, prng),10);
+    dist.add(new AlterSizeFunctor(ellipseGenerator, prng),12);
+    dist.add(new AlterPositionFunctor(ellipseGenerator, prng),12);
     dist.add(new AlterColorByRatioFunctor(prng),10);
     dist.add(new AlterColorBySumFunctor(prng),10);
-    dist.add(new SwapWithRandomFunctor(ellipseGenerator),0.5);
-    dist.add(new AddNewEllipseFunctor(ellipseGenerator),6);
+    dist.add(new SwapWithRandomFunctor(ellipseGenerator),0.1);
+    dist.add(new AddNewEllipseFunctor(ellipseGenerator),8);
     dist.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 3);
     dist.add<RemoveFromBackFunctor>(6);
     dist.add<RemoveFromFrontFunctor>(6);
-    dist.add(new RemoveRandomFunctor(prng),0.5);
+    dist.add<RemoveHalfFunctor>(0.5);
+    dist.add(new RemoveRandomFunctor(prng),0.1);
 }
 
 void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
@@ -38,7 +39,7 @@ void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
     {
         double roll = (*mutationDistribution)(*prng);
 
-        if (roll <= 0.1)
+        if (roll <= 0.15)
         {
             dist.draw()(genotype.collection(), ellipse); // mutate
         }

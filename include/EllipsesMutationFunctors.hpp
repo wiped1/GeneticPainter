@@ -118,3 +118,8 @@ struct RemoveRandomFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellip
     RemoveRandomFunctor(std::mt19937 &prng);
     void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
 };
+
+struct RemoveHalfFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+{
+    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+};
