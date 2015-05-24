@@ -14,6 +14,8 @@ public:
 
     Ellipse(Point position, Size size, Scalar color);
     Ellipse(const Ellipse& other);
-    bool operator<(const Ellipse& other) const;
+
+    bool operator==(const Ellipse &rhs) const;
+    bool operator<(const Ellipse &rhs) const;
 
 };
