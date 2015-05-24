@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.0.0)
 project(GeneticPainter)
 
 find_package(OpenCV REQUIRED)
