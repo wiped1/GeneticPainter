@@ -6,11 +6,11 @@
 
 #include <random>
 #include <memory>
-#include "MutationProbabilityDistribution.hpp"
 #include "Ellipse.hpp"
 #include "MutationOperator.hpp"
 #include "EllipseGenerator.hpp"
 #include "EllipsesGenotype.hpp"
+#include "MutationProbabilityDistribution.hpp"
 
 using namespace gall;
 
@@ -18,8 +18,7 @@ class EllipsesMutationStrategy : public MutationOperator<EllipsesGenotype::Type>
 {
 private:
     std::mt19937 *prng;
-    std::unique_ptr<std::uniform_real_distribution<double>> alterationDistribution;
-    std::unique_ptr<std::uniform_real_distribution<double>> alterationRatio;
+    std::unique_ptr<std::uniform_real_distribution<double>> mutationDistribution;
     EllipseGenerator* ellipseGenerator;
     MutationProbabilityDistribution<EllipsesGenotype::Collection, Ellipse, std::mt19937> dist;
 
