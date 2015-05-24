@@ -1,6 +1,7 @@
 #pragma once
 
 #include <random>
+#include <memory>
 #include "Ellipse.hpp"
 #include "Genotype.hpp"
 #include "CrossoverOperator.hpp"
