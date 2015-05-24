@@ -10,7 +10,6 @@
 #include "EllipseGenerator.hpp"
 #include "EvolvingEnvironment.hpp"
 
-
 struct AlterSizeFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
 {
     const EllipseGenerator *ellipseGenerator;

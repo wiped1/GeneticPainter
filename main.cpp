@@ -42,11 +42,11 @@ int main(int argc, char **argv) {
     EvolvingEnvironmentProvider::getInstance().targetGenerationsCount = numberOfGenerations;
     EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
 
-    mt19937 prng(time(0));
-    Mat benchmarkImage = imread(imgPath);
-    Scalar avarageColor = cv::mean(benchmarkImage, Mat());
+    std::mt19937 prng(time(0));
+    cv::Mat benchmarkImage = imread(imgPath);
+    cv::Scalar averageColor = cv::mean(benchmarkImage, Mat());
     EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 100, 0.8, 1.2);
-    EllipsesRenderer ellipsesRenderer(avarageColor);
+    EllipsesRenderer ellipsesRenderer(averageColor);
     ImageComparator imageComparator;
 
     if (showImage > 0) {
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
 
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
 
-        Mat image(benchmarkImage.size(), CV_8UC3, Scalar(0));
+        cv::Mat image(benchmarkImage.size(), CV_8UC3, Scalar(0));
 
         std::cout << status.getNumberOfGenerations() << std::endl;
         std::cout << status.getHighestFitness() << std::endl;
