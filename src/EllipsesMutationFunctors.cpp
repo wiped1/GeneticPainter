@@ -78,7 +78,7 @@ void AlterColorByRatioFunctor::operator()(EllipsesGenotype::Collection& genotype
 
 AlterAlphaByRatioFunctor::AlterAlphaByRatioFunctor(std::mt19937& prng)
         : prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.92, 1.08))
+        , rd(new std::uniform_real_distribution<double>(0.5, 1.5))
 {
     // do nothing
 }
@@ -155,8 +155,10 @@ CopyNewEllipseFunctor::CopyNewEllipseFunctor(const EllipseGenerator& ellipseGene
 void CopyNewEllipseFunctor::operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const
 {
     AlterPositionFunctor alterPosition(*ellipseGenerator, *prng);
+    AlterSizeFunctor alterSize(*ellipseGenerator, *prng);
     Ellipse e(ellipse);
     alterPosition(genotype, e);
+    alterSize(genotype, e);
     genotype.push_back(e);
 }
 

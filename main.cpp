@@ -36,16 +36,16 @@ int main(int argc, char **argv) {
     if (argv[6])
         showImage = std::atoi(argv[6]);
 
-    EvolvingEnvironmentProvider::getInstance().populationSize = 50;
+    EvolvingEnvironmentProvider::getInstance().populationSize = 30;
     EvolvingEnvironmentProvider::getInstance().genesCount = 150;
     EvolvingEnvironmentProvider::getInstance().numberOfThreads = numberOfThreads;
     EvolvingEnvironmentProvider::getInstance().targetGenerationsCount = numberOfGenerations;
-    EvolvingEnvironmentProvider::getInstance().parentsPerChild = 5;
+    EvolvingEnvironmentProvider::getInstance().parentsPerChild = 2;
 
     mt19937 prng(time(0));
     Mat benchmarkImage = imread(imgPath);
     Scalar avarageColor = cv::mean(benchmarkImage, Mat());
-    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 100, 0.8, 1.2);
+    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 300, 0.8, 1.2);
     EllipsesRenderer ellipsesRenderer(avarageColor);
     ImageComparator imageComparator;
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
         cv::waitKey(1);
     }
 
-    EvolvingProcess<EllipsesGenotype::Type> evolvingProcess;
+    EvolvingProcess<EllipsesGenotype::Type, std::mt19937> evolvingProcess(prng);
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer, imageComparator)
         << new DefaultEliminationStrategy<EllipsesGenotype::Type>

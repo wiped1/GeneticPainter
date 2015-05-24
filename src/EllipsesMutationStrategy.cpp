@@ -27,18 +27,18 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
     dist.add(new SwapWithRandomFunctor(ellipseGenerator),0.5);
     dist.add(new AddNewEllipseFunctor(ellipseGenerator),6);
     dist.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 3);
-    dist.add<RemoveFromBackFunctor>(3);
-    dist.add<RemoveFromFrontFunctor>(3);
-    dist.add(new RemoveRandomFunctor(prng),1);
+    dist.add<RemoveFromBackFunctor>(6);
+    dist.add<RemoveFromFrontFunctor>(6);
+    dist.add(new RemoveRandomFunctor(prng),0.5);
 }
 
 void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
 {
     std::for_each(genotype.begin(), genotype.end(), [&](auto &ellipse)
     {
-        double result = (*mutationDistribution)(*prng);
+        double roll = (*mutationDistribution)(*prng);
 
-        if (result >= 0.5)
+        if (roll <= 0.1)
         {
             dist.draw()(genotype.collection(), ellipse); // mutate
         }
