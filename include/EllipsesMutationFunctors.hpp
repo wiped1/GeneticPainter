@@ -293,6 +293,13 @@ struct RemoveFromBackFunctor : MutationFunctor<EllipsesGenotype::Collection, Ell
     }
 };
 
+struct RemoveFromFrontFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse> {
+    virtual void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const {
+        genotype.erase(std::prev(genotype.end()));
+    }
+};
+
+
 struct RemoveRandomFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
 {
     std::mt19937* prng;
