@@ -12,8 +12,8 @@ SCENARIO("ImageComparator compares two images", "[imageComparator]") {
     GIVEN("two images with oposite colors") {
 
         cv::Size size(200, 200);
-        Mat blue(size, CV_8UC3, Scalar(90, 100, 100));
-        Mat red(size, CV_8UC3, Scalar(0, 100, 100));
+        cv:Mat blue(size, CV_8UC3, Scalar(90, 100, 100));
+        cv::Mat red(size, CV_8UC3, Scalar(0, 100, 100));
 
         WHEN("comparing them by pixels") {
 
@@ -28,7 +28,7 @@ SCENARIO("ImageComparator compares two images", "[imageComparator]") {
     GIVEN("same two images") {
 
         cv::Mat image = imread("../res/monet.png");
-        cvtColor(image, image, COLOR_HSV2BGR);
+        cv::cvtColor(image, image, COLOR_HSV2BGR);
 
         WHEN("comparing them by pixels") {
 
@@ -51,7 +51,7 @@ SCENARIO("ImageComparator compares two images", "[imageComparator]") {
 
             double result = imageComparator.compareByPixels(blue, halfRed);
 
-            THEN("It should return value around 0.5") {
+            THEN("it should return value around 0.5") {
                 REQUIRE(result > 0.49);
                 REQUIRE(result < 0.51);
             }
