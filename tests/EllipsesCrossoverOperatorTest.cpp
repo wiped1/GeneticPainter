@@ -48,8 +48,8 @@ SCENARIO("EllipesCorssoverOperator merges two genotypes into one", "[imageCompar
             THEN("new genotype corssed fragments average length should be a around quoter of the large number value")
             {
                 long currentLength = 1;
-                Ellipse currentFragmentEllipse = *child.begin();
                 std::vector<long> fragmentsLength;
+                Ellipse currentFragmentEllipse = *child.begin();
 
                 for (auto& ellipse : child)
                 {
