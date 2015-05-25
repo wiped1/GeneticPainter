@@ -12,8 +12,14 @@ bool Ellipse::operator<(const Ellipse &other) const {
         return size.area() > other.size.area();
 }
 
-Ellipse::Ellipse(const Ellipse &other) {
-    position = other.position;
-    size = other.size;
-    color = other.color;
+//Ellipse::Ellipse(const Ellipse &other) {
+//    position = other.position;
+//    size = other.size;
+//    color = other.color;
+//}
+bool Ellipse::operator==(const Ellipse &other) const
+{
+    return position == other.position &&
+           size     == other.size     &&
+           color    == other.color;
 }

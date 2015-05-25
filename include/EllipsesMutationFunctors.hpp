@@ -123,3 +123,11 @@ struct RemoveHalfFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse
 {
     void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
 };
+
+struct SwapRandomEllipsesFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse> {
+    std::mt19937* prng;
+
+    SwapRandomEllipsesFunctor(std::mt19937 &prng);
+    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    /* for testing purposes */
+};

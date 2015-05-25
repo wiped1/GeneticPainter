@@ -2,6 +2,7 @@
 // Created by Mckomo on 28.04.15.
 //
 
+#include <iostream>
 #include "EllipseGenerator.hpp"
 
 const double MIN_WIDTH_HEIGHT_RATIO = 0.8;
@@ -34,7 +35,9 @@ Size EllipseGenerator::generateRandomSize() const
     int height = generateRandomRange(minDiameter, maxDiameter);
     double ratio = (*widthHeightRatioDist)(*prng);
     int width = static_cast<int>(height * ratio);
-
+    if ( height < 0 && width < 0 ) {
+        std::cout << "What the fuck" << std::endl;
+    }
     return Size(
             width,
             height);
@@ -46,7 +49,7 @@ Scalar EllipseGenerator::generateRandomColor() const
             generateRandomNonnegative(255),
             generateRandomNonnegative(255),
             generateRandomNonnegative(255),
-            0.3 + 0.7 * generateRandomNonnegative(255) / 255.0);
+            1 * generateRandomNonnegative(255) / 255.0);
 }
 
 unsigned int EllipseGenerator::generateRandomNonnegative(unsigned int rightBound) const

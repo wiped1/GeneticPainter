@@ -7,6 +7,25 @@
 
 double ImageComparator::compareHistograms(MatND &lhs, MatND &rhs)
 {
+//    double fitness = 0;
+//    for (int cols = 0; cols < lhs.cols; cols++) {
+//        for (int rows = 0; rows < lhs.rows; rows++) {
+//            Scalar lhsColor = lhs.at<Scalar>(cols, rows);
+//            Scalar rhsColor = rhs.at<Scalar>(cols, rows);
+//
+//            double deltaGreen = lhsColor[0] - rhsColor[0];
+//            double deltaBlue  = lhsColor[1] - rhsColor[1];
+//            double deltaRed   = lhsColor[2] - rhsColor[2];
+//
+//            double pixelFitness =
+//                    std::pow(deltaGreen, 2) +
+//                    std::pow(deltaBlue, 2) +
+//                    std::pow(deltaRed, 2);
+//
+//            fitness += pixelFitness;
+//        }
+//    }
+//    return 1 - fitness;
     return cv::compareHist(lhs, rhs, 0);
 }
 
