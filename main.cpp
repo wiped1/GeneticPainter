@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
     if (argv[6])
         showImage = std::atoi(argv[6]);
 
-    EvolvingEnvironmentProvider::getInstance().populationSize = 60;
+    EvolvingEnvironmentProvider::getInstance().populationSize = 50;
     EvolvingEnvironmentProvider::getInstance().genesCount = 150;
     EvolvingEnvironmentProvider::getInstance().numberOfThreads = numberOfThreads;
     EvolvingEnvironmentProvider::getInstance().targetGenerationsCount = numberOfGenerations;
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     Mat benchmarkImage = imread(imgPath);
     Scalar avarageColor = cv::mean(benchmarkImage, Mat());
 //    Scalar avarageColor = Scalar(0);
-    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 3, 50, 0.8, 1.2);
+    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 3, 100, 0.8, 1.2);
     EllipsesRenderer ellipsesRenderer(avarageColor);
     ImageComparator imageComparator;
 
@@ -59,7 +59,8 @@ int main(int argc, char **argv) {
     EvolvingProcess<EllipsesGenotype::Type, std::mt19937> evolvingProcess(prng);
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer, imageComparator)
-        << new DefaultEliminationStrategy<EllipsesGenotype::Type>
+//        << new DefaultEliminationStrategy<EllipsesGenotype::Type>
+        << new EllipsesEliminationStrategy(2, prng, 3)
         << new EllipsesCrossoverOperator(prng)
         << new EllipsesBreedingOperator(prng)
         << new EllipsesMutationStrategy(ellipseGenerator, prng);

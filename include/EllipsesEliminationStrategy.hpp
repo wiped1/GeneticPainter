@@ -16,6 +16,11 @@ using namespace gall;
 class EllipsesEliminationStrategy : public EliminationStrategy<EllipsesGenotype::Type>
 {
 private:
+    /* number of unfit genotypes to be included in next generation */
+    int fallout;
+    std::mt19937* prng;
+    int tournamentSize;
 public:
+    EllipsesEliminationStrategy(int fallout, std::mt19937& prng, int tournamentSize);
     void eliminate(Population<EllipsesGenotype::Type> &population);
 };

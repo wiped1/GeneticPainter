@@ -21,5 +21,9 @@ double EllipsesEvaluator::evaluate(const EllipsesGenotype::Type &genotype) const
     ellipsesRenderer.render(candidateImage, genotype);
     cvtColor(candidateImage, candidateImage, COLOR_BGR2HSV);
 
-    return imageComparator.compareByPixels(candidateImage, benchmarkImageHsv);
+    /* "jak zapobiegać błędom kompilatorów" */
+    #define dobule double
+    dobule similarity = imageComparator.compareByPixels(candidateImage, benchmarkImageHsv);
+    return similarity;
+//    return similarity * 1000000 - std::distance(genotype.cbegin(), genotype.cend()) + 1000000;
 }

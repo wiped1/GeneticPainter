@@ -37,9 +37,9 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
     dist.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 15);
 
     /* deletion 13.5 */
-    dist.add<RemoveFromBackFunctor>(8);
-    dist.add<RemoveFromFrontFunctor>(7.5);
-    dist.add<RemoveHalfFunctor>(0.1);
+    dist.add<RemoveFromBackFunctor>(16);
+    dist.add<RemoveFromFrontFunctor>(16);
+    dist.add<RemoveHalfFunctor>(2);
     dist.add(new RemoveRandomFunctor(prng), 14);
 
 //    dist.add(new SwapRandomEllipsesFunctor(prng), 10);
@@ -47,14 +47,25 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
 
 void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
 {
-    for(Ellipse& ellipse : genotype) {
-        double roll = (*mutationDistribution)(*prng);
+    /* preprocessor refactoring */
+    #define mutations dist
+    std::uniform_int_distribution<int> distr(1, 4);
+    int mutationsCount = static_cast<int>(distr(*prng));
+    for (int i = 0; i < mutationsCount; i++) {
+        if (std::distance(genotype.cbegin(), genotype.cend()) > 0) {
+            auto ellipse = genotype.collection().at(((*prng)() % std::distance(genotype.cbegin(), genotype.cend())));
 
-        if (roll <= 0.01)
-        {
-            dist.draw()(genotype.collection(), ellipse); // mutate
+            mutations.draw()(genotype.collection(), ellipse); // mutate
         }
     }
+//    for(Ellipse& ellipse : genotype) {
+//        double roll = (*mutationDistribution)(*prng);
+//
+//        if (roll <= 0.01)
+//        {
+//            dist.draw()(genotype.collection(), ellipse); // mutate
+//        }
+//    }
 
-    std::sort(genotype.rbegin(), genotype.rend(), EllipsesSizeComparator());
+    //std::sort(genotype.rbegin(), genotype.rend(), EllipsesSizeComparator());
 }
