@@ -62,8 +62,8 @@ int main(int argc, char **argv) {
         << new DefaultEliminationStrategy<EllipsesGenotype::Type>
         << new EllipsesCrossoverOperator(prng)
         << new EllipsesBreedingOperator(prng)
-        << new EllipsesMutationStrategy(ellipseGenerator, prng);
-
+        << new EllipsesMutationStrategy(ellipseGenerator, prng, 5);
+    evolvingProcess.setCrossoverProbability(0.5);
     evolvingProcess.evolve([&](ObservableEvolutionStatus<EllipsesGenotype::Type>& status) -> bool {
 
         cv::Mat image(benchmarkImage.size(), CV_8UC3, Scalar(0));

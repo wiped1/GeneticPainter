@@ -10,110 +10,111 @@
 #include "EllipseGenerator.hpp"
 #include "EvolvingEnvironment.hpp"
 
-struct AlterSizeFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct AlterSizeFunctor : public MutationFunctor<EllipsesGenotype::Collection>
 {
     const EllipseGenerator *ellipseGenerator;
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
     std::mt19937* prng;
 
     AlterSizeFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct MakeSmallerFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse> {
+struct MakeSmallerFunctor : public MutationFunctor<EllipsesGenotype::Collection> {
     const EllipseGenerator *ellipseGenerator;
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
     std::mt19937* prng;
 
     MakeSmallerFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct MakeBiggerFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct MakeBiggerFunctor : public MutationFunctor<EllipsesGenotype::Collection>
 {
     const EllipseGenerator *ellipseGenerator;
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
     std::mt19937* prng;
 
     MakeBiggerFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct AlterColorByRatioFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct AlterColorByRatioFunctor : public MutationFunctor<EllipsesGenotype::Collection>
 {
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
     std::mt19937* prng;
 
     AlterColorByRatioFunctor(std::mt19937& prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct AlterAlphaByRatioFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct AlterAlphaByRatioFunctor : public MutationFunctor<EllipsesGenotype::Collection>
 {
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
     std::mt19937* prng;
 
     AlterAlphaByRatioFunctor(std::mt19937& prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct AlterColorBySumFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct AlterColorBySumFunctor : public MutationFunctor<EllipsesGenotype::Collection>
 {
     std::mt19937* prng;
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
 
     AlterColorBySumFunctor(std::mt19937& prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct AlterPositionFunctor : public MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct AlterPositionFunctor : public MutationFunctor<EllipsesGenotype::Collection>
 {
     const EllipseGenerator *ellipseGenerator;
     std::mt19937* prng;
     const std::unique_ptr<std::uniform_real_distribution<double>> rd;
 
     AlterPositionFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct SwapWithRandomFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct SwapWithRandomFunctor : MutationFunctor<EllipsesGenotype::Collection>
 {
     const EllipseGenerator *ellipseGenerator;
 
     SwapWithRandomFunctor(const EllipseGenerator &ellipseGenerator);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct AddNewEllipseFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct AddNewEllipseFunctor : MutationFunctor<EllipsesGenotype::Collection>
 {
     const EllipseGenerator *ellipseGenerator;
 
     AddNewEllipseFunctor(const EllipseGenerator& ellipseGenerator);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct CopyNewEllipseFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct CopyNewEllipseFunctor : MutationFunctor<EllipsesGenotype::Collection>
 {
     const EllipseGenerator *ellipseGenerator;
     std::mt19937* prng;
+    const std::unique_ptr<std::uniform_real_distribution<double>> rd;
 
     CopyNewEllipseFunctor(const EllipseGenerator& ellipseGenerator, std::mt19937& prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct RemoveFromBackFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct RemoveFromBackFunctor : MutationFunctor<EllipsesGenotype::Collection>
 {
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct RemoveFromFrontFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse> {
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+struct RemoveFromFrontFunctor : MutationFunctor<EllipsesGenotype::Collection> {
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
-struct RemoveRandomFunctor : MutationFunctor<EllipsesGenotype::Collection, Ellipse>
+struct RemoveRandomFunctor : MutationFunctor<EllipsesGenotype::Collection>
 {
     std::mt19937* prng;
 
     RemoveRandomFunctor(std::mt19937 &prng);
-    void operator()(EllipsesGenotype::Collection& genotype, Ellipse& ellipse) const;
+    void mutate(EllipsesGenotype::Collection& genes) const;
 };
