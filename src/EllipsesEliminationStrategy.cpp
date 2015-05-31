@@ -24,7 +24,7 @@ void EllipsesEliminationStrategy::eliminate(Population<EllipsesGenotype::Type> &
     std::vector<Population<EllipsesGenotype::Type>::ValueType> newGenotypes;
     for (int i = 0; i < targetPopulationSize; i++) {
        auto bestGenotype = std::next(population.asCollection().begin(), (*prng)() % currentPopulationSize);
-       for (int i = 0; i < tournamentSize; i++) {
+       for (int j = 0; j < tournamentSize; j++) {
                auto candidate = std::next(population.asCollection().begin(), (*prng)() % currentPopulationSize);
                if (candidate->second > bestGenotype->second) {
                        bestGenotype = candidate;
@@ -35,6 +35,6 @@ void EllipsesEliminationStrategy::eliminate(Population<EllipsesGenotype::Type> &
     population.asCollection().erase(
             population.asCollection().begin(), population.asCollection().end());
     for (auto pair : newGenotypes) {
-           population.asCollection().insert(std::move(pair));
+            population.asCollection().insert(std::move(pair));
     }
 }
