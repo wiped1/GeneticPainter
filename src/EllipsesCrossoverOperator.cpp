@@ -13,7 +13,7 @@ EllipsesGenotype::Type EllipsesCrossoverOperator::cross(std::vector<EllipsesGeno
 {
     EllipsesGenotype::Collection childGens;
     unsigned long donerIndex = 0;
-    long geneCount = std::min(parents.at(0).collection().size(), parents.at(1).collection().size());
+    long geneCount = std::min(parents.at(0).asCollection().size(), parents.at(1).asCollection().size());
     double crossingProbability = 4.0 / geneCount;
 
     for (unsigned int i = 0; i < geneCount; i++)
@@ -22,7 +22,7 @@ EllipsesGenotype::Type EllipsesCrossoverOperator::cross(std::vector<EllipsesGeno
             donerIndex = (donerIndex + 1) % 2;
 
         auto &donor = parents.at(donerIndex);
-        auto gene = *std::next(donor.cbegin(), i % std::distance(donor.cbegin(), donor.cend()));
+        auto gene = *std::next(donor.asCollection().cbegin(), i % donor.asCollection().size());
 
         childGens.push_back(gene);
     }

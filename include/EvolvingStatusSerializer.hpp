@@ -18,8 +18,8 @@ public:
         json jsonGenotype;
 
         std::for_each(
-                status.getGenotypeWithBestFitness().cbegin(),
-                status.getGenotypeWithBestFitness().cend(),
+                status.getGenotypeWithBestFitness().asCollection().cbegin(),
+                status.getGenotypeWithBestFitness().asCollection().cend(),
                 [&](auto &ellipse) -> void
                 {
                     jsonGenotype.push_back(

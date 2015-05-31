@@ -70,7 +70,8 @@ int main(int argc, char **argv) {
 
         std::cout << status.getNumberOfGenerations() << std::endl;
         std::cout << status.getHighestFitness() << std::endl;
-        std::cout << "Num. of genes: " << status.getGenotypeWithBestFitness().ccollection().size() << std::endl;
+        std::cout << "Num. of genes: " <<
+                status.getGenotypeWithBestFitness().asCollection().size() << std::endl;
 
         ellipsesRenderer.render(image, status.getGenotypeWithBestFitness());
 
