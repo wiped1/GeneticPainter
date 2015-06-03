@@ -35,6 +35,6 @@ void EllipsesEliminationStrategy::eliminate(Population<EllipsesGenotype::Type> &
     population.asCollection().erase(
             population.asCollection().begin(), population.asCollection().end());
     for (auto pair : newGenotypes) {
-            population.asCollection().insert(std::move(pair));
+        population.asCollection().insert(std::move(pair));
     }
 }

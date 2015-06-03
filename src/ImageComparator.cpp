@@ -23,8 +23,8 @@ double ImageComparator::compareByPixels(const Mat &lhsHsv, const Mat &rhsHsv) co
     Vec3b lhsPx;
     Vec3b rhsPx;
 
-    double differenceSum = 0.0;
-    int hueDiff, saturationDiff, valueDiff;
+    double similaritySum = 0.0;
+    double hueSimilarity, saturationSimilarity, valueSimilarity;
 
     for (int i = 0; i < lhsHsv.cols; i++)
     {
@@ -33,13 +33,13 @@ double ImageComparator::compareByPixels(const Mat &lhsHsv, const Mat &rhsHsv) co
             lhsPx = lhsHsv.at<Vec3b>(j, i);
             rhsPx = rhsHsv.at<Vec3b>(j, i);
 
-            hueDiff = (90 - std::abs(rhsPx.val[0] - lhsPx.val[0]) % 91) * 4; // 0 to 360
-            saturationDiff = 255 - std::abs(rhsPx.val[1] - lhsPx[1]); // 0 to 255
-            valueDiff = 255 - std::abs(rhsPx.val[2] - lhsPx[2]); // 0 to 255
+            hueSimilarity = std::abs(std::abs(rhsPx.val[0] - lhsPx.val[0]) - 127.0) / 127.0;
+            saturationSimilarity = (255 - std::abs(rhsPx.val[1] - lhsPx[1])) / 255.0;
+            valueSimilarity = (255 - std::abs(rhsPx.val[2] - lhsPx[2])) / 255.0;
 
-            differenceSum += hueDiff * saturationDiff * valueDiff;
+            similaritySum += hueSimilarity * saturationSimilarity * valueSimilarity * valueSimilarity;
         }
     }
-
-    return differenceSum / (lhsHsv.cols * lhsHsv.rows * 23409000.0); // 0.0 to 1.0
+    double returnValue = similaritySum / (lhsHsv.cols * lhsHsv.rows);
+    return returnValue; // 0.0 to 1.0
 }

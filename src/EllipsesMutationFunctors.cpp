@@ -69,7 +69,7 @@ void MakeBiggerFunctor::mutate(EllipsesGenotype::Collection& genes) const {
 
 AlterColorByRatioFunctor::AlterColorByRatioFunctor(std::mt19937& prng)
         : prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.5, 1.5))
+        , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
 {
     // do nothing
 }
@@ -84,7 +84,7 @@ void AlterColorByRatioFunctor::mutate(EllipsesGenotype::Collection& genes) const
 
 AlterAlphaByRatioFunctor::AlterAlphaByRatioFunctor(std::mt19937& prng)
         : prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.92, 1.08))
+        , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
 {
     // do nothing
 }
@@ -97,7 +97,7 @@ void AlterAlphaByRatioFunctor::mutate(EllipsesGenotype::Collection& genes) const
 
 AlterColorBySumFunctor::AlterColorBySumFunctor(std::mt19937& prng)
         : prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(-50.0, 50.0))
+        , rd(new std::uniform_real_distribution<double>(-1.0, 1.0))
 {
     // do nothing
 }
@@ -113,7 +113,7 @@ void AlterColorBySumFunctor::mutate(EllipsesGenotype::Collection& genes) const
 AlterPositionFunctor::AlterPositionFunctor(const EllipseGenerator &ellipseGenerator, std::mt19937 &prng)
         : ellipseGenerator(&ellipseGenerator)
         , prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.5, 1.5))
+        , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
 {
     // do nothing
 }
@@ -148,7 +148,7 @@ AddNewEllipseFunctor::AddNewEllipseFunctor(const EllipseGenerator& ellipseGenera
 
 void AddNewEllipseFunctor::mutate(EllipsesGenotype::Collection& genes) const
 {
-    if (std::distance(genes.cbegin(), genes.cend()) < EvolvingEnvironmentProvider::getInstance().genesCount)
+    if (genes.size() < EvolvingEnvironmentProvider::getInstance().genesCount)
     {
         genes.emplace_back(ellipseGenerator->generateRandom());
     }
@@ -165,15 +165,19 @@ CopyNewEllipseFunctor::CopyNewEllipseFunctor(const EllipseGenerator& ellipseGene
 
 void CopyNewEllipseFunctor::mutate(EllipsesGenotype::Collection& genes) const
 {
-    auto ellipse = genes.at((*prng)() % genes.size());
-    Ellipse e(ellipse);
-    e.position.x = std::min<int>(
-            static_cast<int>(static_cast<double>(e.position.x) * getDistributedRandom(*rd, *prng)),
-            ellipseGenerator->getPositionBound().width);
-    e.position.y = std::min<int>(
-            static_cast<int>(static_cast<double>(e.position.y) * getDistributedRandom(*rd, *prng)),
-            ellipseGenerator->getPositionBound().height);
-    genes.push_back(e);
+    if (genes.size() < EvolvingEnvironmentProvider::getInstance().genesCount &&
+            genes.size() > 0)
+    {
+        auto ellipse = genes.at((*prng)() % genes.size());
+        Ellipse e(ellipse);
+        e.position.x = std::min<int>(
+                static_cast<int>(static_cast<double>(e.position.x) * getDistributedRandom(*rd, *prng)),
+                ellipseGenerator->getPositionBound().width);
+        e.position.y = std::min<int>(
+                static_cast<int>(static_cast<double>(e.position.y) * getDistributedRandom(*rd, *prng)),
+                ellipseGenerator->getPositionBound().height);
+        genes.push_back(e);
+    }
 }
 
 void RemoveFromBackFunctor::mutate(EllipsesGenotype::Collection& genes) const
@@ -194,6 +198,14 @@ RemoveRandomFunctor::RemoveRandomFunctor(std::mt19937 &prng)
         : prng(&prng)
 {
     // do nothing
+}
+
+void RemoveHalfFunctor::mutate(EllipsesGenotype::Collection& genes) const
+{
+    if (genes.size() > 1) {
+        genes.erase(genes.begin(), std::prev(genes.end(),
+                genes.size() / 2));
+    }
 }
 
 void RemoveRandomFunctor::mutate(EllipsesGenotype::Collection& genes) const

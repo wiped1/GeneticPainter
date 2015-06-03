@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     std::mt19937 prng(time(0));
     cv::Mat benchmarkImage = imread(imgPath);
     cv::Scalar averageColor = cv::mean(benchmarkImage, Mat());
-    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 100, 0.8, 1.2);
+    EllipseGenerator ellipseGenerator(prng, benchmarkImage.size(), 5, 1000, 0.8, 1.2);
     EllipsesRenderer ellipsesRenderer(averageColor);
     ImageComparator imageComparator;
 
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     EvolvingProcess<EllipsesGenotype::Type, std::mt19937> evolvingProcess(prng);
     evolvingProcess << new EllipsesGenotypeInitializer(ellipseGenerator)
         << new EllipsesEvaluator(benchmarkImage, ellipsesRenderer, imageComparator)
-        << new DefaultEliminationStrategy<EllipsesGenotype::Type>
+        << new EllipsesEliminationStrategy(2, prng, 3)
         << new EllipsesCrossoverOperator(prng)
         << new EllipsesBreedingOperator(prng)
         << new EllipsesMutationStrategy(ellipseGenerator, prng, 5);

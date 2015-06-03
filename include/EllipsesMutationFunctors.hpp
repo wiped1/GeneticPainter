@@ -111,6 +111,11 @@ struct RemoveFromFrontFunctor : MutationFunctor<EllipsesGenotype::Collection> {
     void mutate(EllipsesGenotype::Collection& genes) const;
 };
 
+struct RemoveHalfFunctor : MutationFunctor<EllipsesGenotype::Collection>
+{
+    void mutate(EllipsesGenotype::Collection& genes) const;
+};
+
 struct RemoveRandomFunctor : MutationFunctor<EllipsesGenotype::Collection>
 {
     std::mt19937* prng;

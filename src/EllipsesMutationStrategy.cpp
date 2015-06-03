@@ -20,16 +20,17 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
   mutationDistribution(new std::uniform_real_distribution<double>(0.0, 1.0)),
   mutations(prng), upperMutationLimit(upperMutationLimit)
 {
-    mutations.add(new AlterSizeFunctor(ellipseGenerator, prng),10);
-    mutations.add(new AlterPositionFunctor(ellipseGenerator, prng),10);
-    mutations.add(new AlterColorByRatioFunctor(prng),10);
-    mutations.add(new AlterColorBySumFunctor(prng),10);
-    mutations.add(new SwapWithRandomFunctor(ellipseGenerator),0.5);
-    mutations.add(new AddNewEllipseFunctor(ellipseGenerator),6);
-    mutations.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 3);
-    mutations.add<RemoveFromBackFunctor>(3);
-    mutations.add<RemoveFromFrontFunctor>(3);
-    mutations.add(new RemoveRandomFunctor(prng),1);
+    mutations.add(new AlterSizeFunctor(ellipseGenerator, prng), 15);
+    mutations.add(new AlterPositionFunctor(ellipseGenerator, prng), 15);
+    mutations.add(new AlterColorByRatioFunctor(prng), 16);
+    mutations.add(new AlterAlphaByRatioFunctor(prng), 16);
+//    mutations.add(new SwapWithRandomFunctor(ellipseGenerator),0.5);
+    mutations.add(new AddNewEllipseFunctor(ellipseGenerator), 16);
+    mutations.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 15);
+    mutations.add<RemoveFromBackFunctor>(16);
+    mutations.add<RemoveFromFrontFunctor>(16);
+    mutations.add<RemoveHalfFunctor>(2);
+    mutations.add(new RemoveRandomFunctor(prng),14);
 }
 
 void EllipsesMutationStrategy::mutate(EllipsesGenotype::Type &genotype) const
