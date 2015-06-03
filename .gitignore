@@ -1,5 +1,4 @@
 .DS_Store
-.idea
 license_boilerplate
 bin
 *.swp
@@ -10,3 +9,9 @@ CTestTestfile.cmake
 Makefile
 cmake_install.cmake
 output
+
+# CLion
+.idea/*
+!.idea/codeStyleSettings.xml
+!.idea/workspace.xml
+
