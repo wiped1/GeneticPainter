@@ -5,6 +5,7 @@
 #pragma once
 
 #include <set>
+#include <random>
 #include "Ellipse.hpp"
 #include "Genotype.hpp"
 #include "Population.hpp"
