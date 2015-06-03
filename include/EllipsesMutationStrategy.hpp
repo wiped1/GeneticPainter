@@ -20,9 +20,11 @@ private:
     std::mt19937 *prng;
     std::unique_ptr<std::uniform_real_distribution<double>> mutationDistribution;
     EllipseGenerator* ellipseGenerator;
-    MutationProbabilityDistribution<EllipsesGenotype::Collection, Ellipse, std::mt19937> dist;
+    MutationProbabilityDistribution<EllipsesGenotype::Collection, std::mt19937> mutations;
+    unsigned int upperMutationLimit;
 
 public:
-    EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator, std::mt19937 &prng);
+    EllipsesMutationStrategy(EllipseGenerator &ellipseGenerator, std::mt19937 &prng,
+            unsigned int upperMutationLimit);
     void mutate(EllipsesGenotype::Type &population) const;
 };
