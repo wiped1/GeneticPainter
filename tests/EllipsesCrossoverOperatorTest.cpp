@@ -33,13 +33,13 @@ SCENARIO("EllipesCorssoverOperator merges two genotypes into one", "[imageCompar
             EllipsesGenotype::Type child = crossoverOperator.cross(parents);
 
             THEN("new genotype should have the same large number of genes") {
-                REQUIRE(std::distance(child.cbegin(), child.cend()) == genotypeSize);
+                REQUIRE(child.asCollection().size() == genotypeSize);
             }
 
             THEN("new genotype should have similar number of gens from both parents")
             {
-                long blueCounter = static_cast<double>(count(child.cbegin(), child.cend(), blueEllipse));
-                long redCounter = static_cast<double>(count(child.cbegin(), child.cend(), redEllipse));
+                long blueCounter = static_cast<double>(count(child.asCollection().cbegin(), child.asCollection().cend(), blueEllipse));
+                long redCounter = static_cast<double>(count(child.asCollection().cbegin(), child.asCollection().cend(), redEllipse));
                 double colorDelta = static_cast<double>(std::abs(blueCounter - redCounter)) / genotypeSize;
 
                 REQUIRE(colorDelta < 0.5);
@@ -49,9 +49,9 @@ SCENARIO("EllipesCorssoverOperator merges two genotypes into one", "[imageCompar
             {
                 long currentLength = 1;
                 std::vector<long> fragmentsLength;
-                Ellipse currentFragmentEllipse = *child.begin();
+                Ellipse currentFragmentEllipse = *child.asCollection().begin();
 
-                for (auto& ellipse : child)
+                for (auto& ellipse : child.asCollection())
                 {
                     if (!(ellipse == currentFragmentEllipse))
                     {
