@@ -13,5 +13,3 @@ output
 # CLion
 .idea/*
 !.idea/codeStyleSettings.xml
-!.idea/workspace.xml
-
