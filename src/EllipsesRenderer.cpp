@@ -17,8 +17,8 @@ void EllipsesRenderer::render(Mat &canvas, const EllipsesGenotype::Type &genotyp
     for (auto& e : genotype.asCollection())
     {
         Mat overlay = canvas.clone();
-        cv::ellipse(overlay, e.position, e.size, 0, 0, 360, e.color, -1, CV_AA);
-        cv::addWeighted(overlay, e.color[3], canvas, 1.0 - e.color[3] , 0.0, canvas);
+        cv::ellipse(canvas, e.position, e.size, 0, 0, 360, e.color, -1, CV_AA);
+//        cv::addWeighted(overlay, e.color[3], canvas, 1.0 - e.color[3] , 0.0, canvas);
     }
 }
 

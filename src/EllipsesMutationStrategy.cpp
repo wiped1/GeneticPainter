@@ -26,7 +26,7 @@ EllipsesMutationStrategy::EllipsesMutationStrategy(EllipseGenerator &ellipseGene
     mutations.add(new AlterAlphaByRatioFunctor(prng), 16);
 //    mutations.add(new SwapWithRandomFunctor(ellipseGenerator),0.5);
     mutations.add(new AddNewEllipseFunctor(ellipseGenerator), 16);
-    mutations.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 15);
+    mutations.add(new CopyNewEllipseFunctor(ellipseGenerator, prng), 8);
     mutations.add<RemoveFromBackFunctor>(16);
     mutations.add<RemoveFromFrontFunctor>(16);
     mutations.add<RemoveHalfFunctor>(2);

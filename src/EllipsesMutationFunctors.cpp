@@ -24,10 +24,10 @@ void AlterSizeFunctor::mutate(EllipsesGenotype::Collection& genes) const
 {
     auto ellipse = genes.at((*prng)() % genes.size());
     ellipse.size.height = std::min<int>(
-            static_cast<int>(static_cast<double>(ellipse.size.height) * getDistributedRandom(*rd, *prng)),
+            ellipse.size.height * getDistributedRandom(*rd, *prng),
             ellipseGenerator->getMaxDiameter());
     ellipse.size.width = std::min<int>(
-            static_cast<int>(static_cast<double>(ellipse.size.width) * getDistributedRandom(*rd, *prng)),
+            ellipse.size.width * getDistributedRandom(*rd, *prng),
             ellipseGenerator->getMaxDiameter());
 }
 
@@ -69,7 +69,8 @@ void MakeBiggerFunctor::mutate(EllipsesGenotype::Collection& genes) const {
 
 AlterColorByRatioFunctor::AlterColorByRatioFunctor(std::mt19937& prng)
         : prng(&prng)
-        , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
+//        , rd(new std::uniform_real_distribution<double>(0.95, 1.05))
+        , rd(new std::uniform_real_distribution<double>(0.5, 1.5))
 {
     // do nothing
 }
