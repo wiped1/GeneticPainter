@@ -32,5 +32,5 @@ add_executable(Tests
     ${SOURCE_FILES}
     ${TEST_FILES})
 
-target_link_libraries(GeneticPainter ${OpenCV_LIBS})
+target_link_libraries(GeneticPainter ${OpenCV_LIBS} pthread)
 target_link_libraries(Tests ${OpenCV_LIBS})
